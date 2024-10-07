@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import {FaEye, FaEyeSlash} from 'react-icons/fa';
 
 const Signup = () => {
   const [accountName, setAccountName] = useState('');
@@ -8,6 +8,7 @@ const Signup = () => {
   const [focalPerson, setFocalPerson] = useState('');
   const [number, setNumber] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [pkrIban, setPkrIban] = useState('');
   const [pkrAccountTitle, setPkrAccountTitle] = useState('');
   const [pkrBankName, setPkrBankName] = useState('');
@@ -96,15 +97,21 @@ const Signup = () => {
             />
           </div>
 
-          <div className="form-group mb-3">
+          <div className="form-group mb-3 position-relative">
             <label className='label-text'>New Password</label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               className="form-control input-style"
               placeholder="Enter your new password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className='eye-icon'
+            >
+              {showPassword ? <FaEye />  :  <FaEyeSlash />}
+            </span>
           </div>
 
           <div className="form-group mb-3">
@@ -231,7 +238,7 @@ const Signup = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 green-btn">
+          <button type="submit" className="btn btn-primary w-100 green-btn label-text">
             Sign-Up
           </button>
         </form>
