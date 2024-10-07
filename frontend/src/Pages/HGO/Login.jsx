@@ -13,96 +13,68 @@ const Login = () => {
 
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="p-4" style={{ maxWidth: '400px', width: '100%' }}>
+      <div className="login-container">
         {/* Logo */}
         <div className="text-center mb-4">
           <img
-            src="/path-to-logo.png"
+            src="/assets/logo.png"
             alt="Logo"
-            className="img-fluid"
-            style={{ maxWidth: '150px' }}
+            className="img-fluid logo"
           />
         </div>
 
         {/* Login form */}
         <form onSubmit={handleLogin}>
           <div className="form-group mb-3">
-            <label>Enrollment Number</label>
+            <label className='label-text'>Enrollment Number</label>
             <input
               type="email"
-              className="form-control"
+              className="form-control input-style"
               placeholder="02345643432"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3 position-relative">
-            <label>Password</label>
+            <label className='label-text'>Password</label>
             <input
               type={showPassword ? 'text' : 'password'}
-              className="form-control"
-              placeholder="Enter your password"
+              className="form-control input-style"
+              placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '28px',
-                cursor: 'pointer'
-              }}
+              className='eye-icon'
             >
               {showPassword ? <FaEye />  :  <FaEyeSlash />}
             </span>
           </div>
 
           <div className="mb-3 text-center">
-            <span className="text-muted">Forget Password?</span>
+            <span className='label-text'>Forget Password?</span>
           </div>
 
           {/* Login button */}
           <button
             type="submit"
-            className="btn w-100"
-            style={{ backgroundColor: '#00341a' }}
+            className="btn w-100 green-btn"
           >
-            <span
-              style={{
-                backgroundColor: '#ffe81a',
-                color: '#00341a',
-                padding: '1px 10px',
-                borderRadius: '5px'
-              }}
-            >
-              Login
-            </span>
-            <FaArrowRight className="ms-2" style={{ color: 'white' }} />
+         <span className='white-arrow'> Login</span> 
+            <FaArrowRight className="ms-2 white-arrow"/>
           </button>
         </form>
 
         <div className="text-center mt-3">
-          <span>Don't have an account? </span>
-          <a href="#" className="text-decoration-underline" style={{ color: '#80c99f' }}>
+          <span className='label-text'>Don't have an account? </span>
+          <a href="#" className="text-decoration-underline lightgreen-txt" >
             Signup Here
           </a>
         </div>
       </div>
-    </div>
+    </div> 
   );
 };
 

@@ -1,3 +1,45 @@
-/* .App {
-  text-align: center;
-} */
+.logo {
+  max-width: 250px;
+}
+.label-text {
+  font-size: small;
+}
+.input-style {
+  border-color: #9fd7b7 !important;
+  outline: none !important;
+  background-color: white !important;
+  box-shadow: none !important;
+  font-size: x-small !important;
+}
+.green-btn {
+  background-color: #00341a !important;
+  border-color: #00341a !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.yellow-btn {
+  background-color: #ffe81a;
+  color: #00341a;
+  padding: 1px 10px;
+  border-radius: 5px;
+}
+.white-arrow {
+  color: white;
+  font-size: small;
+}
+.lightgreen-txt {
+  /* color: #80c99f; */
+  color: #9fd7b7;
+  font-size: small;
+}
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 28px;
+  cursor: pointer;
+}
+.login-container {
+  max-width: 500px;
+  width: 100%;
+  padding: 1rem;
+}

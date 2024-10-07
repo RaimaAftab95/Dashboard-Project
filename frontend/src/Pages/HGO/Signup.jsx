@@ -27,320 +27,218 @@ const Signup = () => {
 
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="p-4" style={{ maxWidth: '400px', width: '100%' }}>
+      <div className="login-container">
         {/* Logo */}
         <div className="text-center mb-4">
           <img
-            src="/path-to-logo.png"
+            src="/assets/logo.png"
             alt="Logo"
-            className="img-fluid"
-            style={{ maxWidth: '150px' }}
+            className="img-fluid logo"
           />
         </div>
 
         {/* Signup form */}
         <form onSubmit={handleSignup}>
           <div className="form-group mb-3">
-            <label>Monazam Account Name</label>
+            <label className='label-text'>Monazam Account Name</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter your account name"
+              className="form-control input-style"
+              placeholder="Company Name"
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3 d-flex justify-content-between">
             <div className="w-50 me-2">
-              <label>Email</label>
+              <label className='label-text'>Email</label>
               <input
                 type="email"
-                className="form-control"
-                placeholder="Enter your email"
+                className="form-control input-style"
+                placeholder="ali@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
             <div className="w-50 ms-2">
-              <label>Phone Number</label>
+              <label className='label-text'>Phone Number</label>
               <input
                 type="tel"
-                className="form-control"
-                placeholder="Enter your phone number"
+                className="form-control input-style"
+                placeholder="
+                (+237)696 88 77 55"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
           </div>
 
           <div className="form-group mb-3">
-            <label>Focal Person</label>
+            <label className='label-text'>Focal Person</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter focal person's name"
+              className="form-control input-style"
+              placeholder="Name"
               value={focalPerson}
               onChange={(e) => setFocalPerson(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3">
-            <label>Number</label>
+            <label className='label-text'>Number</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter number"
+              className="form-control input-style"
+              placeholder="For Ex:0303XXXXX32"
               value={number}
               onChange={(e) => setNumber(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3">
-            <label>New Password</label>
+            <label className='label-text'>New Password</label>
             <input
               type="password"
-              className="form-control"
+              className="form-control input-style"
               placeholder="Enter your new password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3">
-            <label>PKR NC Account IBAN</label>
+            <label className='label-text'>PKR NC Account IBAN</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter your PKR NC Account IBAN"
+              className="form-control input-style"
+              placeholder="IBAN Number"
               value={pkrIban}
               onChange={(e) => setPkrIban(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3">
-            <label>PKR Account Title</label>
+            <label className='label-text'>PKR Account Title</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter your PKR Account Title"
+              className="form-control input-style"
+              placeholder="Name"
               value={pkrAccountTitle}
               onChange={(e) => setPkrAccountTitle(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3">
-            <label>PKR Bank Name</label>
+            <label className='label-text'>PKR Bank Name</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter your PKR Bank Name"
+              className="form-control input-style"
+              placeholder="Name"
               value={pkrBankName}
               onChange={(e) => setPkrBankName(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3 d-flex justify-content-between">
             <div className="w-50 me-2">
-              <label>PKR Branch Name</label>
+              <label className='label-text'>PKR Branch Name</label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter PKR Branch Name"
+                className="form-control input-style"
+                placeholder="Name"
                 value={pkrBranchName}
                 onChange={(e) => setPkrBranchName(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
             <div className="w-50 ms-2">
-              <label>PKR Swift Code</label>
+              <label className='label-text'>PKR Swift Code</label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter PKR Swift Code"
+                className="form-control input-style"
+                placeholder="Code"
                 value={pkrSwiftCode}
                 onChange={(e) => setPkrSwiftCode(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
           </div>
 
           <div className="form-group mb-3">
-            <label>FCY NC Account IBAN</label>
+            <label className='label-text'>FCY NC Account IBAN</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter your FCY NC Account IBAN"
+              className="form-control input-style"
+              placeholder="IBAN"
               value={fcyIban}
               onChange={(e) => setFcyIban(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
           <div className="form-group mb-3 d-flex justify-content-between">
             <div className="w-50 me-2">
-              <label>FCY Account Title</label>
+              <label className='label-text'>FCY Account Title</label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter your FCY Account Title"
+                className="form-control input-style"
+                placeholder="Title"
                 value={fcyAccountTitle}
                 onChange={(e) => setFcyAccountTitle(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
             <div className="w-50 ms-2">
-              <label>FCY Bank Name</label>
+              <label className='label-text'>FCY Bank Name</label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter your FCY Bank Name"
+                className="form-control input-style"
+                placeholder="Name"
                 value={fcyBankName}
                 onChange={(e) => setFcyBankName(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
           </div>
 
           <div className="form-group mb-3 d-flex justify-content-between">
             <div className="w-50 me-2">
-              <label>FCY Branch Name</label>
+              <label className='label-text'>FCY Branch Name</label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter FCY Branch Name"
+                className="form-control input-style"
+                placeholder="Name"
                 value={fcyBranchName}
                 onChange={(e) => setFcyBranchName(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
             <div className="w-50 ms-2">
-              <label>FCY Swift Code</label>
+              <label className='label-text'>FCY Swift Code</label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter FCY Swift Code"
+                className="form-control input-style"
+                placeholder="Code"
                 value={fcySwiftCode}
                 onChange={(e) => setFcySwiftCode(e.target.value)}
-                style={{
-                  borderColor: '#00341a',
-                  outline: 'none',
-                  backgroundColor: 'white',
-                  boxShadow: 'none'
-                }}
               />
             </div>
           </div>
 
           <div className="form-group mb-3">
-            <label className="font-medium">E-Hajj IBAN</label>
+            <label className='label-text'>E-Hajj IBAN</label>
             <input
               type="text"
-              className="form-control"
-              placeholder="Enter your E-Hajj IBAN"
+              className="form-control input-style"
+              placeholder="IBAN"
               value={iban}
               onChange={(e) => setIban(e.target.value)}
-              style={{
-                borderColor: '#00341a',
-                outline: 'none',
-                backgroundColor: 'white',
-                boxShadow: 'none'
-              }}
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100"  style={{ backgroundColor: '#00341a' }}>
-            Signup <FaArrowRight />
+          <button type="submit" className="btn btn-primary w-100 green-btn">
+            Sign-Up
           </button>
         </form>
 
         <div className="text-center mt-3">
-          <span>Already have an account? </span>
-          <a href="#" className="text-decoration-underline" style={{ color: '#80c99f' }}>
+          <span className='label-text'>Already have an account? </span>
+          <a href="#" className="text-decoration-underline lightgreen-txt">
             Login Here
           </a>
         </div>
