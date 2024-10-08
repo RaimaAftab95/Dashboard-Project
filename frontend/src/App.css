@@ -99,7 +99,6 @@
 }
 .maincontent-container {
   background-color: #fafafa;
-  margin-top: 36px;
 }
 /* Tabs */
 .tab-link {
@@ -113,12 +112,13 @@
 /* Pagination. */
 .pagination .page-link {
   color: #000000;
-  font-size: 12px;
+  font-size: 8px;
 }
 
 .pagination .page-link:hover {
   color: #019440;
   background-color: #ffffff !important;
+  border-color: #27272a !important;
 }
 
 .pagination .page-link:focus {
@@ -127,7 +127,7 @@
 
 .pagination .page-item.active .page-link {
   background-color: #019440;
-  color: white;
+  border-color: #019440 !important;
 }
 
 /* Filterbtn */
@@ -135,6 +135,8 @@
   color: #ffffff;
   font-size: 12px !important;
   border-color: #000000;
+  background-color: #ffffff !important;
+  font-size: x-small !important;
 }
 
 .btn-outline-secondary:hover {
@@ -145,4 +147,14 @@
 
 .btn-outline-secondary:focus {
   outline: none;
+}
+.tableheader-txt {
+  font-size: x-small !important;
+  color: #a1a1aa !important;
+  font-weight: 500 !important;
+}
+.tabledata-txt {
+  font-size: x-small !important;
+  color: #27272a !important;
+  font-weight: 500 !important;
 }

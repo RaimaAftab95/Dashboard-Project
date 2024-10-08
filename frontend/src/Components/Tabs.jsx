@@ -15,7 +15,7 @@ const Tabs = () => {
           <a className="nav-link tab-link" href="#">Monazama Account</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link tab-link" href="#">Opap Account</a>
+          <a className="nav-link tab-link" href="#">OPAP Account</a>
         </li>
         <li className="nav-item">
           <a className="nav-link tab-link" href="#">E-Hajj Account</a>

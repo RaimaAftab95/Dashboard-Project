@@ -2,39 +2,39 @@ import React from 'react';
 
 const Table = () => {
   return (
-    <table className="table table-striped">
+    <table class="table">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Narration</th>
-          <th>Currency</th>
-          <th>Amount</th>
+          <th className='tableheader-txt'>Date</th>
+          <th className='tableheader-txt'>Narration</th>
+          <th className='tableheader-txt'>Currency</th>
+          <th className='tableheader-txt'>Amount</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>01-01-2024</td>
-          <td>Payment</td>
-          <td>USD</td>
-          <td>1000</td>
+          <td className="tabledata-txt p-1">01-01-2024</td>
+          <td className="tabledata-txt">Payment</td>
+          <td className="tabledata-txt">USD</td>
+          <td className="tabledata-txt">1000</td>
         </tr>
         <tr>
-          <td>02-01-2024</td>
-          <td>Transfer</td>
-          <td>PKR</td>
-          <td>5000</td>
+          <td className="tabledata-txt">02-01-2024</td>
+          <td className="tabledata-txt">Transfer</td>
+          <td className="tabledata-txt">PKR</td>
+          <td className="tabledata-txt">5000</td>
         </tr>
         <tr>
-          <td>03-01-2024</td>
-          <td>Deposit</td>
-          <td>USD</td>
-          <td>1500</td>
+          <td className="tabledata-txt">03-01-2024</td>
+          <td className="tabledata-txt">Deposit</td>
+          <td className="tabledata-txt">USD</td>
+          <td className="tabledata-txt">1500</td>
         </tr>
         <tr>
-          <td>04-01-2024</td>
-          <td>Withdrawal</td>
-          <td>EUR</td>
-          <td>2000</td>
+          <td className="tabledata-txt">04-01-2024</td>
+          <td className="tabledata-txt">Withdrawal</td>
+          <td className="tabledata-txt">EUR</td>
+          <td className="tabledata-txt">2000</td>
         </tr>
       </tbody>
     </table>
