@@ -1,8 +1,9 @@
+/* Login SignUp and Reset password Style */
 .logo {
   max-width: 250px;
 }
 .label-text {
-  font-size: small;
+  font-size: small !important;
 }
 .input-style {
   border: 1px solid #019440 !important;
@@ -42,4 +43,106 @@
   max-width: 500px;
   width: 100%;
   padding: 1rem;
+}
+
+/* Dashboard Style */
+.sidebar-logo-bg {
+  background-color: #d6f6e3 !important;
+  padding: 15px;
+}
+.dashboard-sidebar-bg {
+  background: #f3f5f3;
+}
+.plus-icon {
+  font-size: x-small !important;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 256px;
+  height: 100vh;
+  overflow-y: auto;
+  background: #f3f5f3;
+  z-index: 1000;
+}
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 256px;
+  height: 100vh;
+  background: #f3f5f3;
+  z-index: 1000;
+}
+
+.main-content {
+  margin-left: 256px;
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+}
+.user-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.maincontent-container {
+  background-color: #fafafa;
+  margin-top: 36px;
+}
+/* Tabs */
+.tab-link {
+  color: #000000 !important;
+  font-size: small !important;
+}
+
+.tab-link.active {
+  color: #019440 !important;
+}
+/* Pagination. */
+.pagination .page-link {
+  color: #000000;
+  font-size: 12px;
+}
+
+.pagination .page-link:hover {
+  color: #019440;
+  background-color: #ffffff !important;
+}
+
+.pagination .page-link:focus {
+  outline: none;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #019440;
+  color: white;
+}
+
+/* Filterbtn */
+.btn-outline-secondary {
+  color: #ffffff;
+  font-size: 12px !important;
+  border-color: #000000;
+}
+
+.btn-outline-secondary:hover {
+  color: #019440 !important;
+  border-color: #019440 !important;
+  background-color: #ffffff !important;
+}
+
+.btn-outline-secondary:focus {
+  outline: none;
 }
