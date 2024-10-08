@@ -32,12 +32,11 @@ const ResetPassword = () => {
           {/* Reset Password Button */}
           <button type="submit" className="btn w-100 green-btn">
             <span className='white-arrow'>Reset Password</span> 
-            {/* <FaArrowRight className="ms-2 white-arrow" /> */}
           </button>
         </form>
 
         <div className="text-center mt-3">
-          <a href="#" className="text-decoration-underline lightgreen-txt">
+          <a href="#" className="text-decoration-none lightgreen-txt">
             Back to Login Page
           </a>
         </div>

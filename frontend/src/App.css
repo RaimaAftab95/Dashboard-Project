@@ -5,7 +5,7 @@
   font-size: small;
 }
 .input-style {
-  border-color: #9fd7b7 !important;
+  border: 1px solid #019440 !important;
   outline: none !important;
   background-color: white !important;
   box-shadow: none !important;
@@ -28,8 +28,7 @@
   font-size: small;
 }
 .lightgreen-txt {
-  /* color: #80c99f; */
-  color: #9fd7b7;
+  color: #019440;
   font-size: small;
 }
 .eye-icon {
@@ -37,6 +36,7 @@
   right: 10px;
   top: 25px;
   cursor: pointer;
+  color: #00341a;
 }
 .login-container {
   max-width: 500px;

@@ -69,7 +69,7 @@ const Login = () => {
 
         <div className="text-center mt-3">
           <span className='label-text'>Don't have an account? </span>
-          <a href="#" className="text-decoration-underline lightgreen-txt">
+          <a href="#" className="text-decoration-none lightgreen-txt">
             Signup Here
           </a>
         </div>

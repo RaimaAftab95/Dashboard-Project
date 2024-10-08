@@ -245,7 +245,7 @@ const Signup = () => {
 
         <div className="text-center mt-3">
           <span className='label-text'>Already have an account? </span>
-          <a href="#" className="text-decoration-underline lightgreen-txt">
+          <a href="#" className="text-decoration-none lightgreen-txt">
             Login Here
           </a>
         </div>
