@@ -160,3 +160,66 @@ body {
   color: #27272a !important;
   font-weight: 500 !important;
 }
+
+/* Modal styles to bring it on front */
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.bg-black {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+.modal-blur-bg {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.modal-heading-txt {
+  font-size: medium !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
+}
+.modal-label-txt {
+  font-size: small !important;
+}
+.modal-input-txt {
+  font-size: x-small !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #a1a1aa !important;
+  border: #ffffff;
+}
+.modal-input-txt:hover {
+  border-color: #019440 !important;
+}
+.modal-btn-bg {
+  background-color: #019440 !important;
+  color: #ffffff !important;
+}
+.modal-header {
+  border-bottom: none !important;
+}
+.modal-footer {
+  border-top: none !important;
+}
