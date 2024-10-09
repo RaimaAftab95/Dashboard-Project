@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaBell } from 'react-icons/fa';
-import IncomingRequest from '../../Incoming/IncomingRequest';
+import MerchantRequest from './MerchantRequest';
 
 const Tabs = () => {
   const [isIncomingModalOpen, setIncomingModalOpen] = useState(false); 
@@ -19,10 +19,10 @@ const Tabs = () => {
       <ul className="nav">
         <li className="nav-item">
           <a 
-            className="nav-link tab-link active" 
-            aria-current="page" 
+            className="nav-link tab-link" 
+            // aria-current="page" 
             href="#" 
-            onClick={openIncomingModal} 
+            // onClick={openIncomingModal} 
           >
             Incoming
           </a>
@@ -40,11 +40,17 @@ const Tabs = () => {
           <a className="nav-link tab-link" href="#">E-Hajj Account</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link tab-link" href="#">Merchant</a>
+          <a className="nav-link tab-link active"
+            aria-current="page" 
+            href="#" 
+            onClick={openIncomingModal}
+           >
+            Merchant
+            </a>
         </li>
       </ul>
       <FaBell size={20} className="ms-3" />
-      <IncomingRequest isOpen={isIncomingModalOpen} onClose={closeIncomingModal} />
+      <MerchantRequest isOpen={isIncomingModalOpen} onClose={closeIncomingModal} />
     </div>
   );
 };
