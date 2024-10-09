@@ -1,10 +1,10 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
-import HGOLogin from './Pages/HGO/Login';  
-import HGOSignup from './Pages/HGO/Signup'; 
-import HGOResetPassword from './Pages/HGO/ResetPassword';
-import HGOResetPassword1 from './Pages/HGO/ResetPassword1'; 
-import Dashboard from './Pages/HGO/Dashboard';
+import HGOLogin from './Pages/HGO/Authentication/Login';  
+import HGOSignup from './Pages/HGO/Authentication/Signup'; 
+import HGOResetPassword from './Pages/HGO/Authentication/ResetPassword';
+import HGOResetPassword1 from './Pages/HGO/Authentication/ResetPassword1'; 
+import Dashboard from './Pages/HGO/Dashboard/Dashboard';
 
 function App() {
   return (

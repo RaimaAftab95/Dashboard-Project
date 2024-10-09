@@ -1,4 +1,10 @@
+body {
+  margin: 0;
+  font-family: "Inter" !important;
+}
+
 /* Login SignUp and Reset password Style */
+
 .logo {
   max-width: 250px;
 }
