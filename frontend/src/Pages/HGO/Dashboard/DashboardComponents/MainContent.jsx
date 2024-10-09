@@ -13,7 +13,7 @@ const MainContent = () => {
       <div className="p-4 maincontent-container">
       <Filters />
       {/* Container for Table and Pagination */}
-      <div className="table-pagination-container shadow p-3 mb-3 bg-white rounded">
+      <div className="table-pagination-container shadow-sm p-3 m-3 bg-white rounded">
         <Table />
         <div className="d-flex justify-content-end mt-5"> 
           <Pagination />

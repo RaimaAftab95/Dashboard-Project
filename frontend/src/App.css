@@ -54,7 +54,7 @@ body {
 /* Dashboard Style */
 .sidebar-logo-bg {
   background-color: #d6f6e3 !important;
-  padding: 15px;
+  padding: 10px;
 }
 .dashboard-sidebar-bg {
   background: #f3f5f3;
@@ -66,7 +66,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 256px;
+  width: 200px !important;
   height: 100vh;
   overflow-y: auto;
   background: #f3f5f3;
@@ -76,19 +76,10 @@ body {
   display: flex;
   height: 100vh;
 }
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 256px;
-  height: 100vh;
-  background: #f3f5f3;
-  z-index: 1000;
-}
-
 .main-content {
-  margin-left: 256px;
-  padding: 20px;
+  /* margin-left: 200px; */
+  margin-left: 180px;
+  /* padding: 20px; */
   height: 100vh;
   overflow-y: auto;
 }
@@ -137,10 +128,15 @@ body {
 }
 
 /* Filterbtn */
+.filter-btn {
+  width: 60px;
+  height: 25px;
+}
 .btn-outline-secondary {
   color: #ffffff;
   font-size: 12px !important;
-  border-color: #000000;
+  /* border-color: #000000; */
+  border-color: #ffffff !important;
   background-color: #ffffff !important;
   font-size: x-small !important;
 }
