@@ -1,18 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaBell } from 'react-icons/fa';
-import OutgoingRequest from './OutgoingRequest';
 
 const Tabs = () => {
-  const [isIncomingModalOpen, setIncomingModalOpen] = useState(false); 
-
-  const openIncomingModal = (e) => {
-    e.preventDefault(); 
-    setIncomingModalOpen(true);
-  };
-
-  const closeIncomingModal = () => {
-    setIncomingModalOpen(false); 
-  };
 
   return (
     <div className="d-flex justify-content-end mb-4 align-items-center">
@@ -20,18 +9,14 @@ const Tabs = () => {
         <li className="nav-item">
           <a 
             className="nav-link tab-link" 
-            // aria-current="page" 
             href="#" 
-            // onClick={openIncomingModal} 
           >
             Incoming
           </a>
         </li>
         <li className="nav-item">
           <a className="nav-link tab-link active"
-            aria-current="page" 
             href="#" 
-            onClick={openIncomingModal} 
            >
             Outgoing
             </a>
@@ -50,7 +35,6 @@ const Tabs = () => {
         </li>
       </ul>
       <FaBell size={20} className="ms-3" />
-      <OutgoingRequest isOpen={isIncomingModalOpen} onClose={closeIncomingModal} />
     </div>
   );
 };
