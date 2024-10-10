@@ -80,8 +80,9 @@ body {
   /* margin-left: 200px; */
   margin-left: 180px;
   /* padding: 20px; */
-  height: 100vh;
+  /* height: 95vh; */
   overflow-y: auto;
+  /* margin-top: 50px !important; */
 }
 @media (max-width: 768px) {
   .sidebar {
@@ -96,6 +97,7 @@ body {
 }
 .maincontent-container {
   background-color: #fafafa;
+  height: 90vh !important;
 }
 /* Tabs */
 .tab-link {
@@ -129,8 +131,9 @@ body {
 
 /* Filterbtn */
 .filter-btn {
-  width: 60px;
+  width: 70px;
   height: 25px;
+  font-weight: 600 !important;
 }
 .btn-outline-secondary {
   color: #ffffff;
