@@ -7,6 +7,7 @@ import HGOResetPassword1 from './Pages/HGO/Authentication/ResetPassword1';
 import IncomingDashboard from './Pages/HGO/Dashboard/incoming/Incoming';
 import OutgoingDashboard from './Pages/HGO/Dashboard/outgoing/Outgoing';
 import MerchantDashboard from './Pages/HGO/Dashboard/merchant/Merchant';
+import MonazamAccountDashboard  from './Pages/HGO/Dashboard/monazam_account/monazam_account';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/hgo/incoming" element={<IncomingDashboard />} />
           <Route path="/hgo/outgoing" element={<OutgoingDashboard />} />
           <Route path="/hgo/merchant" element={<MerchantDashboard />} />
+          <Route path="/hgo/monazamaccount" element={<MonazamAccountDashboard/>} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </div>

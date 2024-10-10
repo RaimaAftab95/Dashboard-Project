@@ -16,6 +16,15 @@ const Tabs = () => {
   return (
     <div className="d-flex justify-content-end align-items-center me-2">
       <ul className="nav">
+        {/* Transfer Button */}
+        <li className="nav-item me-2">
+          <a className="nav-link tab-link" aria-current="page" href="#">Transfer</a>
+        </li>
+        {/* Separator Line */}
+        <li className="nav-item">
+          <div className="separator" style={{ borderLeft: '2px solid #019440', height: '30px', margin: '0 10px' }}></div>
+        </li>
+        {/* Existing Tabs */}
         <li className="nav-item">
           <a className="nav-link tab-link active" aria-current="page" href="#">
             Incoming
