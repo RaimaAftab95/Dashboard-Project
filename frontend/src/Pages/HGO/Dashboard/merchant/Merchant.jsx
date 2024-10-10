@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from '../Dashboard3/MerchantDashboardComponents/Sidebar';
-import MainContent from '../Dashboard3/MerchantDashboardComponents/MainContent';
+import Sidebar from '../common_components/Sidebar';
+import MainContent from './MerchantComponents/MainContent';
 
 const MerchantDashboard = () => {
   return (

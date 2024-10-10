@@ -1,5 +1,5 @@
 import React from 'react';
-import Tabs from './Tabs';
+import Tabs from '../../common_components/Tabs';
 import Filters from './Filterbtn';
 import Table from './Table';
 import Pagination from './Pagination';

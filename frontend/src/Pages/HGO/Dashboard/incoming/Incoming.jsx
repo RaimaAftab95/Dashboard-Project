@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from '../Dashboard/IncomingDashboardComponents/Sidebar';
-import MainContent from '../Dashboard/IncomingDashboardComponents/MainContent';
+import Sidebar from '../common_components/Sidebar';
+import MainContent from './IncomingComponents/MainContent';
 
 const IncomingDashboard = () => {
   return (
