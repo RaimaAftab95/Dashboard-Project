@@ -4,7 +4,7 @@ import { FaBell } from 'react-icons/fa';
 const Tabs = () => {
   
   return (
-    <div className="d-flex justify-content-end align-items-center">
+    <div className="d-flex justify-content-end align-items-center me-2">
       <ul className="nav">
         <li className="nav-item">
           <a 
