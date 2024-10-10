@@ -263,3 +263,11 @@ body {
   font-size: 16px;
   color: #019440 !important;
 }
+/* Custom styles for HGO text */
+.hgo-text {
+  margin-right: auto;
+}
+
+.dropdown-section {
+  margin-top: 1rem;
+}
