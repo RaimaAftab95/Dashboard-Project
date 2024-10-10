@@ -45,7 +45,10 @@ const Table = () => {
       <div className="dropdown-section mt-4">
         <div className="flex justify-between items-center">
           <span className="hgo-text">HGO1</span>
-          <button className="text-lg" onClick={toggleHGO1}>
+          <button 
+          //  className="text-lg"
+           className="text-lg plus-minus-btn"
+           onClick={toggleHGO1}>
             {showHGO1 ? '-' : '+'}
           </button>
         </div>
@@ -88,7 +91,7 @@ const Table = () => {
       <div className="dropdown-section mt-4">
         <div className="flex justify-between items-center">
           <span className="hgo-text">HGO2</span>
-          <button className="text-lg" onClick={toggleHGO2}>
+          <button className="text-lg plus-minus-btn" onClick={toggleHGO2}>
             {showHGO2 ? '-' : '+'}
           </button>
         </div>

@@ -271,3 +271,7 @@ body {
 .dropdown-section {
   margin-top: 1rem;
 }
+.plus-minus-btn {
+  border: none !important;
+  background-color: transparent;
+}
