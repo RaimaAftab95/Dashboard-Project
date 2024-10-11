@@ -3,13 +3,14 @@ import Tabs from '../../common_components/Tabs';
 import Filters from './Filterbtn';
 import Table from './Table';
 import Pagination from './Pagination';
+import { FaLock } from 'react-icons/fa';
 
 const MainContent = () => {
   return (
     <div className="mt-2 main-content flex-grow-1">
       <Tabs />
 
-      {/* Container for Filters and Table*/}
+      {/* Container for Filters and Table */}
       <div className="ps-4 pt-2 maincontent-container mt-2">
         {/* Filter Buttons and Balance */}
         <div className="d-flex justify-content-between align-items-center">
@@ -25,7 +26,14 @@ const MainContent = () => {
         {/* Container for Table and Pagination */}
         <div className="table-pagination-container shadow-sm p-3 m-3 bg-white rounded">
           <Table />
-          <div className="d-flex justify-content-end mt-5"> 
+
+          {/* Export Button and Pagination */}
+          <div className="d-flex justify-content-between align-items-center mt-5">
+            
+            <button className="btn modal-label-txt modal-btn-bg d-flex align-items-center">
+              Export <FaLock className="ms-2" /> 
+            </button>
+
             <Pagination />
           </div>
         </div>
