@@ -10,6 +10,7 @@ const Table = () => {
   return (
     <div>
       {/* Main Table */}
+      <div className="table-responsive">
       <table className="table">
         <thead>
           <tr>
@@ -128,6 +129,7 @@ const Table = () => {
             </tbody>
           </table>
         )}
+      </div>
       </div>
     </div>
   );

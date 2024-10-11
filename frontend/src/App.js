@@ -7,7 +7,7 @@ import HGOResetPassword1 from './Pages/HGO/Authentication/ResetPassword1';
 import IncomingDashboard from './Pages/HGO/Dashboard/incoming/Incoming';
 import OutgoingDashboard from './Pages/HGO/Dashboard/outgoing/Outgoing';
 import MerchantDashboard from './Pages/HGO/Dashboard/merchant/Merchant';
-import MonazamAccountDashboard  from './Pages/HGO/Dashboard/monazam_account/monazam_account';
+import MonazamAccountDashboard  from './Pages/HGO/Dashboard/monazam_account/MonazamAccount';
 
 function App() {
   return (
