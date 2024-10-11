@@ -266,6 +266,9 @@ body {
 /* Custom styles for HGO text */
 .hgo-text {
   margin-right: auto;
+  font-size: x-small !important;
+  font-weight: 500 !important;
+  /* color: #019440 !important; */
 }
 
 .dropdown-section {

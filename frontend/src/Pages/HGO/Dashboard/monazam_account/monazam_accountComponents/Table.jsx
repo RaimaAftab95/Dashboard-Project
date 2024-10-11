@@ -86,7 +86,7 @@ const Table = () => {
           </table>
         )}
       </div>
-
+<hr></hr>
       {/* HGO2 Section */}
       <div className="dropdown-section mt-4">
         <div className="flex justify-between items-center">
