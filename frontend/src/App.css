@@ -68,12 +68,6 @@ body {
   display: flex;
   height: 100vh;
 }
-/* .main-content {
-   margin-left: 180px;
-   padding: 20px;
-  height: 95vh;
-  overflow-y: auto;
-} */
 
 .user-circle {
   width: 40px;
@@ -340,10 +334,6 @@ body {
     margin-left: 180px !important;
   }
 }
-/* .logo-img {
-    width: 140px;
-    height: 40px;
-  } */
 
 .main-content1 {
   flex-grow: 1;
@@ -356,9 +346,9 @@ body {
   box-shadow: none !important;
   outline: none !important;
 }
-/* Add this CSS rule to reduce the margin on small screens */
+
+/* mobile phones */
 @media (max-width: 576px) {
-  /* Small screens like mobile phones */
   .bell-icon {
     margin-left: 0px !important; /* Reduce margin-left */
   }
@@ -366,45 +356,3 @@ body {
     margin-left: 0px !important;
   }
 }
-@media (max-width: 768px) {
-  /* .logo {
-    padding-left: 0 !important;
-  } */
-  /* .main-content {
-    margin-left: 0px !important;
-  }
-  .maincontent-container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .table-pagination-container {
-    margin-left: 0 !important;
-  }
-  .table-pagination-container {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .table {
-    margin: 0 !important;
-    padding: 0 !important;
-  } */
-}
-/* @media (max-width: 576px) {
-  .maincontent-container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .table-pagination-container {
-    margin-left: 0 !important;
-  }
-  .table-pagination-container {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .table {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-} */
