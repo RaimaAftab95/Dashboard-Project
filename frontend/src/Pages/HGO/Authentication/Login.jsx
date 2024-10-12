@@ -54,7 +54,7 @@ const Login = () => {
           </div>
 
           <div className="mb-3 text-center">
-            <span className='label-text'>Forget Password?</span>
+            <span className='label-text'>Forget Password? </span>
             <a href="/hgo/resetpassword" className="text-decoration-none lightgreen-txt">
            Reset Password
           </a>
