@@ -21,7 +21,7 @@ const Tabs = () => {
   }, [location]);
 
   return (
-    <div className="d-flex justify-content-end align-items-center me-2">
+    <div className="d-flex justify-content-end align-items-center me-2 m-sm-0 m-xsm-0">
       <ul className="nav">
       {/* <li className="nav-item me-2">
           <a
@@ -84,7 +84,7 @@ const Tabs = () => {
           </a>
         </li>
       </ul>
-      <FaBell size={20} className="ms-3" onClick={handleBellClick} style={{ cursor: 'pointer' }} />
+      <FaBell size={20} className="ms-3 bell-icon" onClick={handleBellClick} style={{ cursor: 'pointer' }} />
 {/* Notification Modal */}
 <Notification isOpen={isModalOpen} onClose={closeModal} />
 

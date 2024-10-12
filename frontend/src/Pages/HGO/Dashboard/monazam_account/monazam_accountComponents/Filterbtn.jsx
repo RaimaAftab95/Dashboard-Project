@@ -9,7 +9,7 @@ const Filterbtn = () => {
   };
 
   return (
-    <div className="ms-4 mb-4 d-flex align-items-center">
+    <div className="ms-4 mb-4 d-flex align-items-center ms-sm-0">
      
       <button
         className={`btn btn-sm me-1 ${selectedCurrency === 'PKR' ? 'selected' : 'unselected'}`}

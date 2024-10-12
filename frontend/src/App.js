@@ -14,7 +14,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/hgo/login" element={<HGOLogin />} />
+          <Route path="/" element={<HGOLogin />} />
           <Route path="/hgo/signup" element={<HGOSignup />} />
           <Route path="/hgo/resetpassword" element={<HGOResetPassword />} />
           <Route path="/hgo/resetpassword1" element={<HGOResetPassword1 />} />

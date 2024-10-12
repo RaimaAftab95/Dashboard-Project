@@ -36,7 +36,7 @@ const ResetPassword = () => {
         </form>
 
         <div className="text-center mt-3">
-          <a href="#" className="text-decoration-none lightgreen-txt">
+          <a href="/" className="text-decoration-none lightgreen-txt">
             Back to Login Page
           </a>
         </div>

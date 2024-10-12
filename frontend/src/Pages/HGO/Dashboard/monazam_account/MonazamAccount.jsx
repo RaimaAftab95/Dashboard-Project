@@ -11,19 +11,19 @@ const MonazamAccount = () => {
   };
 
   return (
-    <div className="container-fluid dashboard-layout">
+    <div className="container dashboard-layout m-0 p-0">
       {/* Overlay Sidebar */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       {/* Main Content */}
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
         {/* Hamburger Menu for mobile screens */}
-        <div className="d-md-none d-flex justify-content-between align-items-center p-3">
+        <div className="d-md-none d-flex justify-content-between align-items-center sidebar-logo-bg py-3 px-1">
           <button className="btn" onClick={toggleSidebar}>
             {isSidebarOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
           
-          <img src="/assets/logo.png" alt="Logo" className="img-fluid logo" style={{ height: '40px' }} /> 
+          <img src="/assets/logo.png" alt="Logo" className="img-fluid logo pe-5" style={{ height: '40px'}} /> 
         </div>
 
         <MainContent />

@@ -351,3 +351,60 @@ body {
   margin-left: 0px;
   padding: 0;
 }
+/* pagination of moazam */
+.page-link:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+/* Add this CSS rule to reduce the margin on small screens */
+@media (max-width: 576px) {
+  /* Small screens like mobile phones */
+  .bell-icon {
+    margin-left: 0px !important; /* Reduce margin-left */
+  }
+  .main-content {
+    margin-left: 0px !important;
+  }
+}
+@media (max-width: 768px) {
+  /* .logo {
+    padding-left: 0 !important;
+  } */
+  /* .main-content {
+    margin-left: 0px !important;
+  }
+  .maincontent-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .table-pagination-container {
+    margin-left: 0 !important;
+  }
+  .table-pagination-container {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .table {
+    margin: 0 !important;
+    padding: 0 !important;
+  } */
+}
+/* @media (max-width: 576px) {
+  .maincontent-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .table-pagination-container {
+    margin-left: 0 !important;
+  }
+  .table-pagination-container {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .table {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+} */

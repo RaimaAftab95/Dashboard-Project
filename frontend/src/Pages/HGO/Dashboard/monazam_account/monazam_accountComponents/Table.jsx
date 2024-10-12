@@ -47,7 +47,6 @@ const Table = () => {
         <div className="flex justify-between items-center">
           <span className="hgo-text">HGO1</span>
           <button 
-          //  className="text-lg"
            className="text-lg plus-minus-btn"
            onClick={toggleHGO1}>
             {showHGO1 ? '-' : '+'}

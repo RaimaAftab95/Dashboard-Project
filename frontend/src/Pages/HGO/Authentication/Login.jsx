@@ -55,6 +55,9 @@ const Login = () => {
 
           <div className="mb-3 text-center">
             <span className='label-text'>Forget Password?</span>
+            <a href="/hgo/resetpassword" className="text-decoration-none lightgreen-txt">
+           Reset Password
+          </a>
           </div>
 
           {/* Login button */}
@@ -69,7 +72,7 @@ const Login = () => {
 
         <div className="text-center mt-3">
           <span className='label-text'>Don't have an account? </span>
-          <a href="#" className="text-decoration-none lightgreen-txt">
+          <a href="/hgo/signup" className="text-decoration-none lightgreen-txt">
             Signup Here
           </a>
         </div>
