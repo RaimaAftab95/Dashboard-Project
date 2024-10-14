@@ -314,6 +314,10 @@ body {
 .close-btn:hover {
   cursor: pointer;
 }
+.btn-close-notification {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 /* Hide close button on larger screens */
 @media (min-width: 768px) {
@@ -364,5 +368,12 @@ body {
   .main-content1 {
     margin-left: 0px;
     width: 100% !important;
+  }
+  .notification-modalposition {
+    display: block !important;
+    position: fixed !important;
+    top: 25% !important;
+    left: 15% !important;
+    z-index: 1050 !important;
   }
 }
