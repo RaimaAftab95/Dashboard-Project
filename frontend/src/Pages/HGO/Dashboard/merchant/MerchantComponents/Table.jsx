@@ -2,6 +2,7 @@ import React from 'react';
 
 const Table = () => {
   return (
+     <div className="table-responsive">
     <table className="table">
       <thead>
         <tr>
@@ -72,6 +73,7 @@ const Table = () => {
         </tr>
       </tbody>
     </table>
+    </div>
   );
 };
 
