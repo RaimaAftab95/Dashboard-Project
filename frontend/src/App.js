@@ -8,6 +8,9 @@ import IncomingDashboard from './Pages/HGO/Dashboard/incoming/Incoming';
 import OutgoingDashboard from './Pages/HGO/Dashboard/outgoing/Outgoing';
 import MerchantDashboard from './Pages/HGO/Dashboard/merchant/Merchant';
 import MonazamAccountDashboard  from './Pages/HGO/Dashboard/monazam_account/MonazamAccount';
+import OpapDashboard  from './Pages/HGO/Dashboard/opap_account/OpapAccount';
+import EhajjDashboard  from './Pages/HGO/Dashboard/ehajj_account/Ehajj';
+import ErrorPage from './Pages/HGO/Dashboard/common_components/ErrorPage';
 
 function App() {
   return (
@@ -22,7 +25,9 @@ function App() {
           <Route path="/hgo/outgoing" element={<OutgoingDashboard />} />
           <Route path="/hgo/merchant" element={<MerchantDashboard />} />
           <Route path="/hgo/monazamaccount" element={<MonazamAccountDashboard/>} />
-          <Route path="*" element={<h1>404 Not Found</h1>} />
+          <Route path="/hgo/opap" element={<OpapDashboard/>} />
+          <Route path="/hgo/ehajj" element={<EhajjDashboard/>} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </Router>

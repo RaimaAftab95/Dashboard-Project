@@ -61,16 +61,16 @@ const Tabs = () => {
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/opap' ? 'active' : ''}`}
-            href="/opap"
+            className={`nav-link tab-link ${activeTab === '/hgo/opap' ? 'active' : ''}`}
+            href="/hgo/opap"
           >
             OPAP Account
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/ehajj' ? 'active' : ''}`}
-            href="/ehajj"
+            className={`nav-link tab-link ${activeTab === '/hgo/ehajj' ? 'active' : ''}`}
+            href="/hgo/ehajj"
           >
             E-Hajj Account
           </a>
