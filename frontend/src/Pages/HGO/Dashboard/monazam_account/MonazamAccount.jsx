@@ -11,7 +11,7 @@ const MonazamAccount = () => {
   };
 
   return (
-    <div className="container dashboard-layout m-0 p-0">
+    <div className="container-fluid  dashboard-layout m-0 p-0">
       {/* Overlay Sidebar */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 

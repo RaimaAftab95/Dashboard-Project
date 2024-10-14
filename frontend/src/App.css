@@ -336,10 +336,16 @@ body {
 }
 
 .main-content1 {
-  flex-grow: 1;
-  width: 100%important;
-  margin-left: 0px;
+  flex-grow: 1 !important;
+  width: 146% !important;
+  margin-left: 20px;
   padding: 0;
+}
+.maincontent-container1 {
+  background-color: #fafafa;
+  height: 90vh !important;
+  flex-grow: 1 !important;
+  /* width: 140% !important; */
 }
 /* pagination of moazam */
 .page-link:focus {
@@ -350,9 +356,13 @@ body {
 /* mobile phones */
 @media (max-width: 576px) {
   .bell-icon {
-    margin-left: 0px !important; /* Reduce margin-left */
+    margin-left: 0px !important;
   }
   .main-content {
     margin-left: 0px !important;
+  }
+  .main-content1 {
+    margin-left: 0px;
+    width: 100% !important;
   }
 }

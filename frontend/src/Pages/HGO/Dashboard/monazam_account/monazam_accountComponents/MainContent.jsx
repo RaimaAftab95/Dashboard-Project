@@ -7,11 +7,11 @@ import { FaLock } from 'react-icons/fa';
 
 const MainContent = () => {
   return (
-    <div className="mt-2 main-content flex-grow-1">
+    <div className="mt-2 main-content1">
       <Tabs />
 
       {/* Container for Filters and Table */}
-      <div className="ps-lg-4 ps-md-4 pt-2 maincontent-container mt-2">
+      <div className="ps-lg-4 ps-md-4 pt-2 maincontent-container1 mt-2">
         {/* Filter Buttons and Balance */}
         <div className="d-flex justify-content-between align-items-center">
           <Filters />
