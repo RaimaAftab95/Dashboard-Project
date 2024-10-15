@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Sidebar from '../common_components/Sidebar';
-import MainContentTransfer from './opaptransfercomponents/MainContentTransfer';
+import MainContentTransfer from './ehajjtransfercomponents/MainContentTransfer';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
-const OpapTransfer = () => {
+const EhajjTransfer = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  // const [activeTab, setActiveTab] = useState('/transfer'); 
+  // const [activeTab, setActiveTab] = useState('/transfer');
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -33,5 +33,5 @@ const OpapTransfer = () => {
   );
 };
 
-export default OpapTransfer;
+export default EhajjTransfer;
 
