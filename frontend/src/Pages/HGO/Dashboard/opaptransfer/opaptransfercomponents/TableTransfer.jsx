@@ -26,7 +26,7 @@ const TableTransfer = () => {
           </tbody>
         </table>
 
-        {/* HGO1 Section for Voucher V001 */}
+     {/*  Section1  */}
         <div className="dropdown-section mt-4">
           <div className="d-flex justify-content-between align-items-center">
             <span className="hgo-text">Alexander</span>
@@ -62,7 +62,7 @@ const TableTransfer = () => {
 
         <hr />
 
-        {/* HGO2 Section for Voucher V002 */}
+        {/*  Section2  */}
         <div className="dropdown-section mt-4">
           <div className="d-flex justify-content-between align-items-center">
             <span className="hgo-text">Alexander</span>

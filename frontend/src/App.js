@@ -9,7 +9,7 @@ import OutgoingDashboard from './Pages/HGO/Dashboard/outgoing/Outgoing';
 import MerchantDashboard from './Pages/HGO/Dashboard/merchant/Merchant';
 import MonazamAccountDashboard  from './Pages/HGO/Dashboard/monazam_account/MonazamAccount';
 import OpapDashboard  from './Pages/HGO/Dashboard/opap_account/OpapAccount';
-import OpapTransferDashboard  from './Pages/HGO/Dashboard/opap_account/OpapTransfer';
+import OpapTransferDashboard  from './Pages/HGO/Dashboard/opaptransfer/OpapTransfer';
 import EhajjDashboard  from './Pages/HGO/Dashboard/ehajj_account/Ehajj';
 
 import ErrorPage from './Pages/HGO/Dashboard/common_components/ErrorPage';

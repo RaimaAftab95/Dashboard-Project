@@ -10,7 +10,11 @@ const MainContent = () => {
     <div className="mt-2 main-content1">
       {/* Tabs Section */}
       <Tabs />
-
+ {/* Transfer Button Above Main Content */}
+        <div className="">
+          <button className="btn outline-none bg-none">Transfer</button>
+        </div>
+         
       {/* Container for Filters, Balance, and Table */}
       <div className="ps-lg-4 ps-md-4 pt-2 maincontent-container1 mt-2">
         {/* Filters and Balance Box */}
