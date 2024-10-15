@@ -9,7 +9,9 @@ import OutgoingDashboard from './Pages/HGO/Dashboard/outgoing/Outgoing';
 import MerchantDashboard from './Pages/HGO/Dashboard/merchant/Merchant';
 import MonazamAccountDashboard  from './Pages/HGO/Dashboard/monazam_account/MonazamAccount';
 import OpapDashboard  from './Pages/HGO/Dashboard/opap_account/OpapAccount';
+import OpapTransferDashboard  from './Pages/HGO/Dashboard/opap_account/OpapTransfer';
 import EhajjDashboard  from './Pages/HGO/Dashboard/ehajj_account/Ehajj';
+
 import ErrorPage from './Pages/HGO/Dashboard/common_components/ErrorPage';
 
 function App() {
@@ -26,6 +28,7 @@ function App() {
           <Route path="/hgo/merchant" element={<MerchantDashboard />} />
           <Route path="/hgo/monazamaccount" element={<MonazamAccountDashboard/>} />
           <Route path="/hgo/opap" element={<OpapDashboard/>} />
+              <Route path="/hgo/opaptransfer" element={<OpapTransferDashboard/>} />
           <Route path="/hgo/ehajj" element={<EhajjDashboard/>} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
