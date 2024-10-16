@@ -4,8 +4,9 @@ import IncomingRequest from './IncomingRequest';
 import OutgoingRequest from './OutgoingRequest';
 import MerchantRequest from './MerchantRequest';
 import RequestButtons from './RequestButtons';
+import MonazamSidebarBtns from './MonazamSidebarBtns'; // Import the MonazamSidebarBtns component
 
-const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a prop
+const OutgoingSidebar = ({ isOpen, toggleSidebar, rollId }) => {
   const [isIncomingModalOpen, setIncomingModalOpen] = useState(false);
   const [isOutgoingModalOpen, setOutgoingModalOpen] = useState(false);
   const [isMerchantModalOpen, setMerchantModalOpen] = useState(false);
@@ -49,7 +50,7 @@ const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a p
           </button>
         </div>
 
-        {/* Conditionally render RequestButtons component based on rollId */}
+        {/* Conditionally render buttons based on rollId */}
         {rollId === 'hgo' && (
           <RequestButtons
             openIncomingModal={openIncomingModal}
@@ -57,6 +58,7 @@ const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a p
             openMerchantModal={openMerchantModal}
           />
         )}
+        {rollId === 'monazam' && <MonazamSidebarBtns />}
 
         {/* User Profile Section - Ensure it's at the bottom */}
         <div className="mt-auto d-flex align-items-center justify-content-center mb-3">
@@ -83,4 +85,4 @@ const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a p
   );
 };
 
-export default Sidebar;
+export default OutgoingSidebar;

@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
-import Sidebar from '../common_components/Sidebar';
+import OutgoingSidebar from '../common_components/OutgoingSidebar'; 
 import MainContent from './OutgoingingComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import RollIdPrompt from '../common_components/RollIdPrompt';
 
-const OutgoingDashboard = () => {
+const OutgoingDashboard = () => {  // Accept rollId as a prop
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+   const [rollId, setRollId] = useState(''); // State to store the roll ID
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
+   const handleRollIdSubmit = (id) => {
+    setRollId(id); // Update the roll ID state
+  };
+  
+
   return (
     <div className="container-fluid dashboard-layout m-0 p-0">
       {/* Overlay Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <OutgoingSidebar 
+        isOpen={isSidebarOpen} 
+        toggleSidebar={toggleSidebar} 
+        rollId={rollId}  // Pass the rollId prop to OutgoingSidebar
+      />
 
       {/* Main Content */}
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
@@ -26,7 +37,10 @@ const OutgoingDashboard = () => {
           <img src="/assets/logo.png" alt="Logo" className="img-fluid logo pe-5" style={{ height: '40px' }} /> 
         </div>
 
-        <MainContent />
+        {/* Roll ID Prompt */}
+        <RollIdPrompt onRollIdSubmit={handleRollIdSubmit} />
+
+        <MainContent rollId={rollId} />
       </div>
     </div>
   );

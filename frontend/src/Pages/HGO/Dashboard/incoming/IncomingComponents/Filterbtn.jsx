@@ -1,31 +1,58 @@
 import React from 'react';
 
-const Filterbtn = ({ sortData }) => {
+const Filterbtn = ({ rollId }) => {
   return (
     <div className="ms-4 mb-4 d-flex">
-      {/* Date Filter Button */}
+      {/* Conditionally add the HGO Dropdown for 'monazam' rollId */}
+      {rollId === 'monazam' ? ( // Show HGO button if rollId is 'monazam'
+        <div className="dropdown me-2">
+          <button
+            className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle"
+            type="button"
+            id="hgoDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            HGO
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="hgoDropdown">
+            <li><a className="dropdown-item" href="#">HGO Option</a></li>
+          </ul>
+        </div>
+      ) : null} {/* Hide HGO button if rollId is not 'monazam' */}
+
+      {/* Date Dropdown */}
       <div className="dropdown me-2">
         <button
           className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle"
           type="button"
           id="dateDropdown"
-          onClick={() => sortData('date')}
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
           Date
         </button>
+        <ul className="dropdown-menu" aria-labelledby="dateDropdown">
+          <li><a className="dropdown-item" href="#">01-01-2024</a></li>
+        </ul>
       </div>
 
-      {/* Currency Filter Button */}
-      <div className="dropdown">
+      {/* Currency Dropdown */}
+      <div className="dropdown me-2">
         <button
           className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle"
           type="button"
           id="currencyDropdown"
-          onClick={() => sortData('currency')}
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
           Currency
         </button>
+        <ul className="dropdown-menu" aria-labelledby="currencyDropdown">
+          <li><a className="dropdown-item" href="#">USD</a></li>
+        </ul>
       </div>
+
     </div>
   );
 };

@@ -117,12 +117,29 @@ body {
 }
 .btn-outline-secondary {
   color: #ffffff;
-  font-size: 12px !important;
+  /* font-size: 12px !important; */
   border-color: #ffffff !important;
   background-color: #ffffff !important;
   font-size: x-small !important;
 }
-
+/* approvedbtn */
+.approved-btn {
+  color: #ffffff;
+  font-size: x-small !important;
+  border-color: #019440 !important;
+  background-color: #ffffff !important;
+  font-size: x-small !important;
+  width: 80px !important;
+  margin-bottom: 3px;
+}
+.rejectbtn {
+  color: #ffffff !important;
+  font-size: x-small !important;
+  border-color: red !important;
+  background-color: red !important;
+  font-size: x-small !important;
+  width: 80px !important;
+}
 .btn-outline-secondary:hover {
   color: #019440 !important;
   border-color: #019440 !important;

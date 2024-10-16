@@ -1,39 +1,25 @@
 import React from 'react';
 
-const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
-  const handlePageChange = (page) => {
-    if (page >= 0 && page < totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
+const Pagination = () => {
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">
         <li className="page-item">
-          <button
-            className="page-link"
-            aria-label="Previous"
-            onClick={() => handlePageChange(Math.max(currentPage - 1, 0))}
-          >
+          <a className="page-link" href="#" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
-          </button>
+          </a>
         </li>
-        {[...Array(totalPages).keys()].map((index) => (
-          <li key={index} className={`page-item ${index === currentPage ? 'active' : ''}`}>
-            <button className="page-link" onClick={() => handlePageChange(index)}>
+        {[...Array(10)].map((_, index) => (
+          <li key={index} className={`page-item ${index === 0 ? 'active' : ''}`}>
+            <a className="page-link" href="#">
               {index + 1}
-            </button>
+            </a>
           </li>
         ))}
         <li className="page-item">
-          <button
-            className="page-link"
-            aria-label="Next"
-            onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages - 1))}
-          >
+          <a className="page-link" href="#" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
-          </button>
+          </a>
         </li>
       </ul>
     </nav>

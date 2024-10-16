@@ -11,12 +11,13 @@ const MainContent = () => {
       {/* Tabs Section */}
       <Tabs />
  {/* Transfer Button Above Main Content */}
+ <hr></hr>
         <div className="">
-          <button className="btn outline-none bg-none">Transfer</button>
+          <button className="btn outline-none bg-none ms-5">Transfer</button>
         </div>
          
       {/* Container for Filters, Balance, and Table */}
-      <div className="ps-lg-4 ps-md-4 pt-2 maincontent-container1 mt-2">
+      <div className="ps-lg-4 ps-md-4 pt-2 maincontent-container1">
         {/* Filters and Balance Box */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           {/* Filter Buttons */}

@@ -1,8 +1,26 @@
 import React from 'react';
 
-const Filterbtn = () => {
+const Filterbtn = ({ rollId }) => {
   return (
     <div className="ms-4 mb-4 d-flex">
+      {/* Conditionally render the HGO Dropdown for 'monazam' rollId */}
+      {rollId === 'monazam' && (
+        <div className="dropdown me-2">
+          <button
+            className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle"
+            type="button"
+            id="hgoDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            HGO
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="hgoDropdown">
+            <li><a className="dropdown-item" href="#">HGO Option</a></li>
+          </ul>
+        </div>
+      )}
+
       {/* Date Dropdown */}
       <div className="dropdown me-2">
         <button
