@@ -1,9 +1,9 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
-import HGOLogin from './Pages/HGO/Authentication/Login';  
-import HGOSignup from './Pages/HGO/Authentication/Signup'; 
-import HGOResetPassword from './Pages/HGO/Authentication/ResetPassword';
-import HGOResetPassword1 from './Pages/HGO/Authentication/ResetPassword1'; 
+import Login from './Pages/HGO/Authentication/Login';  
+import Signup from './Pages/HGO/Authentication/Signup'; 
+import ResetPassword from './Pages/HGO/Authentication/ResetPassword';
+import ResetPassword1 from './Pages/HGO/Authentication/ResetPassword1'; 
 import IncomingDashboard from './Pages/HGO/Dashboard/incoming/Incoming';
 import OutgoingDashboard from './Pages/HGO/Dashboard/outgoing/Outgoing';
 import MerchantDashboard from './Pages/HGO/Dashboard/merchant/Merchant';
@@ -19,18 +19,18 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<HGOLogin />} />
-          <Route path="/hgo/signup" element={<HGOSignup />} />
-          <Route path="/hgo/resetpassword" element={<HGOResetPassword />} />
-          <Route path="/hgo/resetpassword1" element={<HGOResetPassword1 />} />
-          <Route path="/hgo/incoming" element={<IncomingDashboard />} />
-          <Route path="/hgo/outgoing" element={<OutgoingDashboard />} />
-          <Route path="/hgo/merchant" element={<MerchantDashboard />} />
-          <Route path="/hgo/monazamaccount" element={<MonazamAccountDashboard/>} />
-          <Route path="/hgo/opap" element={<OpapDashboard/>} />
-          <Route path="/hgo/opaptransfer" element={<OpapTransferDashboard/>} />
-          <Route path="/hgo/ehajj" element={<EhajjDashboard/>} />
-          <Route path="/hgo/ehajjtransfer" element={<EhajjTransferDashboard/>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/resetpassword1" element={<ResetPassword1 />} />
+          <Route path="/incoming" element={<IncomingDashboard />} />
+          <Route path="/outgoing" element={<OutgoingDashboard />} />
+          <Route path="/merchant" element={<MerchantDashboard />} />
+          <Route path="/monazamaccount" element={<MonazamAccountDashboard/>} />
+          <Route path="/opap" element={<OpapDashboard/>} />
+          <Route path="/opaptransfer" element={<OpapTransferDashboard/>} />
+          <Route path="/ehajj" element={<EhajjDashboard/>} />
+          <Route path="/ehajjtransfer" element={<EhajjTransferDashboard/>} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

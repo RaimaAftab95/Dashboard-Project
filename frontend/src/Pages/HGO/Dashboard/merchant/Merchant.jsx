@@ -2,18 +2,24 @@ import React, { useState } from 'react';
 import Sidebar from '../common_components/Sidebar';
 import MainContent from './MerchantComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import RollIdPrompt from '../common_components/RollIdPrompt';
+
 
 const MerchantDashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [rollId, setRollId] = useState(''); // State to store the roll ID
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
+  };
+   const handleRollIdSubmit = (id) => {
+    setRollId(id); // Update the roll ID state
   };
 
   return (
     <div className="container-fluid dashboard-layout m-0 p-0">
       {/* Overlay Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId}/>
 
       {/* Main Content */}
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
@@ -26,7 +32,10 @@ const MerchantDashboard = () => {
           <img src="/assets/logo.png" alt="Logo" className="img-fluid logo pe-5" style={{ height: '40px' }} /> 
         </div>
 
-        <MainContent />
+        {/* Roll ID Prompt */}
+        <RollIdPrompt onRollIdSubmit={handleRollIdSubmit} />
+
+        <MainContent  rollId={rollId} />
       </div>
     </div>
   );

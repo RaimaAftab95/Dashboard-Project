@@ -37,48 +37,48 @@ const Tabs = () => {
         </li> */}
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/hgo/incoming' ? 'active' : ''}`}
-            href="/hgo/incoming"
+            className={`nav-link tab-link ${activeTab === '/incoming' ? 'active' : ''}`}
+            href="/incoming"
           >
             Incoming
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/hgo/outgoing' ? 'active' : ''}`}
-            href="/hgo/outgoing"
+            className={`nav-link tab-link ${activeTab === '/outgoing' ? 'active' : ''}`}
+            href="/outgoing"
           >
             Outgoing
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/hgo/monazamaccount' ? 'active' : ''}`}
-            href="/hgo/monazamaccount"
+            className={`nav-link tab-link ${activeTab === '/monazamaccount' ? 'active' : ''}`}
+            href="/monazamaccount"
           >
-            Monazama Account
+            Monazam Account
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/hgo/opap' ? 'active' : ''}`}
-            href="/hgo/opap"
+            className={`nav-link tab-link ${activeTab === '/opap' ? 'active' : ''}`}
+            href="/opap"
           >
             OPAP Account
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/hgo/ehajj' ? 'active' : ''}`}
-            href="/hgo/ehajj"
+            className={`nav-link tab-link ${activeTab === '/ehajj' ? 'active' : ''}`}
+            href="/ehajj"
           >
             E-Hajj Account
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link tab-link ${activeTab === '/hgo/merchant' ? 'active' : ''}`}
-            href="/hgo/merchant"
+            className={`nav-link tab-link ${activeTab === '/merchant' ? 'active' : ''}`}
+            href="/merchant"
           >
             Merchant
           </a>
