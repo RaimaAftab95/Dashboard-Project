@@ -12,6 +12,7 @@ import OpapDashboard  from './Pages/HGO/Dashboard/opap_account/OpapAccount';
 import OpapTransferDashboard  from './Pages/HGO/Dashboard/opaptransfer/OpapTransfer';
 import EhajjDashboard  from './Pages/HGO/Dashboard/ehajj_account/Ehajj';
 import EhajjTransferDashboard  from './Pages/HGO/Dashboard/ehajjtransfer/EhajjTransfer';
+import MonazamAccountTransfer  from './Pages/HGO/Dashboard/monazamAccounttransfer/MonazamAccTransfer';
 import ErrorPage from './Pages/HGO/Dashboard/common_components/ErrorPage';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/outgoing" element={<OutgoingDashboard />} />
           <Route path="/merchant" element={<MerchantDashboard />} />
           <Route path="/monazamaccount" element={<MonazamAccountDashboard/>} />
+          <Route path="/monazamaccounttransfer" element={<MonazamAccountTransfer/>} />
           <Route path="/opap" element={<OpapDashboard/>} />
           <Route path="/opaptransfer" element={<OpapTransferDashboard/>} />
           <Route path="/ehajj" element={<EhajjDashboard/>} />

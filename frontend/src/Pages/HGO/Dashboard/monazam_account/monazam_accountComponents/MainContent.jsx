@@ -5,7 +5,7 @@ import Table from './Table';
 import Pagination from './Pagination';
 import { FaLock } from 'react-icons/fa';
 
-const MainContent = () => {
+const MainContent = ({ rollId }) => {
   return (
     <div className="mt-2 main-content1">
       <Tabs />
@@ -25,7 +25,7 @@ const MainContent = () => {
 
         {/* Container for Table and Pagination */}
         <div className="table-pagination-container shadow-sm p-3 m-lg-3 bg-white rounded">
-          <Table />
+          <Table rollId={rollId} />
 
           {/* Export Button and Pagination */}
           <div className="d-flex justify-content-between align-items-center mt-5">

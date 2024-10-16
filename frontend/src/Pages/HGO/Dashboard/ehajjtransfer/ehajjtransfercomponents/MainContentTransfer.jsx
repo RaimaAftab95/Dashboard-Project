@@ -11,7 +11,6 @@ const MainContent = () => {
       {/* Tabs Section */}
       <Tabs />
  {/* Transfer Button Above Main Content */}
- <hr></hr>
         <div className="">
           <button className="btn outline-none bg-none ms-5">Transfer</button>
         </div>

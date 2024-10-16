@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
-import Sidebar from '../common_components/Sidebar';
+import AccSidebar from '../common_components/Accumulativesidebar';
 import MainContentTransfer from './ehajjtransfercomponents/MainContentTransfer';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import RollIdPrompt from '../common_components/RollIdPrompt';
 
 const EhajjTransfer = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+   const [rollId, setRollId] = useState(''); // State to store the roll ID
   // const [activeTab, setActiveTab] = useState('/transfer');
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
+    const handleRollIdSubmit = (id) => {
+    setRollId(id); // Update the roll ID state
+  };
 
   return (
     <div className="container-fluid dashboard-layout m-0 p-0">
       {/* Overlay Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <AccSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId} />
 
       {/* Main Content */}
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
@@ -26,7 +31,9 @@ const EhajjTransfer = () => {
           
           <img src="/assets/logo.png" alt="Logo" className="img-fluid logo pe-5" style={{ height: '40px'}} /> 
         </div>
-
+        
+{/* Roll ID Prompt */}
+        <RollIdPrompt onRollIdSubmit={handleRollIdSubmit} />
         <MainContentTransfer />
       </div>
     </div>

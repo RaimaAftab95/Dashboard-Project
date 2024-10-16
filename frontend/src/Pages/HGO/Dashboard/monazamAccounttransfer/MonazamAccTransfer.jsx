@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import AccSidebar from '../common_components/Accumulativesidebar';
-import MainContentTransfer from './opaptransfercomponents/MainContentTransfer';
+import MainContentTransfer from './MonazamAcctransfercomponents/MainContentTransfer';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import RollIdPrompt from '../common_components/RollIdPrompt';
 
-const OpapTransfer = () => {
+const MonazamAccTransfer = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
    const [rollId, setRollId] = useState(''); // State to store the roll ID
   // const [activeTab, setActiveTab] = useState('/transfer');
@@ -40,5 +40,5 @@ const OpapTransfer = () => {
   );
 };
 
-export default OpapTransfer;
+export default MonazamAccTransfer ;
 

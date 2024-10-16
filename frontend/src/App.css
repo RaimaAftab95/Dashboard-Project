@@ -145,7 +145,9 @@ body {
   border-color: #019440 !important;
   background-color: #ffffff !important;
 }
-
+.edit-icon {
+  width: 20px !important;
+}
 .btn-outline-secondary:focus {
   outline: none;
 }
