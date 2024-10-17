@@ -5,7 +5,7 @@ import TableTransfer from './TableTransfer';
 import Pagination from './Pagination';
 import { FaLock } from 'react-icons/fa';
 
-const MainContent = () => {
+const MainContentTransfer = () => {
   return (
     <div className="mt-2 main-content1">
       {/* Tabs Section */}
@@ -49,4 +49,4 @@ const MainContent = () => {
   );
 };
 
-export default MainContent;
+export default MainContentTransfer;

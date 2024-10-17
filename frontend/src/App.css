@@ -125,7 +125,6 @@ body {
 /* approvedbtn */
 .approved-btn {
   color: #ffffff;
-  font-size: x-small !important;
   border-color: #019440 !important;
   background-color: #ffffff !important;
   font-size: x-small !important;
@@ -395,4 +394,35 @@ body {
     left: 15% !important;
     z-index: 1050 !important;
   }
+}
+.transferbtn {
+  border-color: none !important;
+  box-shadow: none !important;
+  transition: all 0.3s ease;
+}
+
+.transferbtn:hover {
+  border-color: #019440 !important;
+  color: #019440 !important;
+}
+.transferbtn.active {
+  background-color: #019440;
+}
+.btn-compact {
+  padding: 0.1rem 0.1rem !important;
+  color: #ffffff;
+  border-color: #019440 !important;
+  background-color: #ffffff !important;
+  font-size: xx-small !important;
+  width: 45px !important;
+  margin-bottom: 3px;
+}
+.btn-compactreject {
+  padding: 0.1rem 0.1rem !important;
+  color: #ffffff !important;
+  border-color: red !important;
+  background-color: red !important;
+  font-size: xx-small !important;
+  width: 45px !important;
+  margin-bottom: 3px;
 }

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import AccSidebar from '../common_components/Accumulativesidebar';
-import MainContent from './opapaccountComponents/MainContent';
+import MainContent from './EhajjaccountComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import RollIdPrompt from '../common_components/RollIdPrompt';
 
-const OpapAccount = () => {
+const EhajjAccount = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [rollId, setRollId] = useState(''); // State to store the roll ID
 
@@ -40,4 +40,4 @@ const OpapAccount = () => {
   );
 };
 
-export default OpapAccount;
+export default EhajjAccount;

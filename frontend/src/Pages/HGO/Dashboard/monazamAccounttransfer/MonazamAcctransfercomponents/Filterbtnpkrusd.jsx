@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Filterbtn = ({ selectedCurrency, onCurrencySelect }) => {
+const Filterbtnpkrusd = () => {
+  const [selectedCurrency, setSelectedCurrency] = useState('PKR');
+
+  // Function to handle the button click
+  const handleCurrencySelect = (currency) => {
+    setSelectedCurrency(currency);
+  };
+
   return (
-    <div className="ms-4 mb-4 flex flex-wrap space-x-2 space-y-2 sm:space-y-0 justify-start">
+    <div className="ms-4 mb-4 d-flex align-items-center ms-sm-0">
+     
       <button
         className={`btn btn-sm me-1 ${selectedCurrency === 'PKR' ? 'selected' : 'unselected'}`}
         style={{
@@ -10,11 +18,14 @@ const Filterbtn = ({ selectedCurrency, onCurrencySelect }) => {
           color: selectedCurrency === 'PKR' ? '#019440' : '#019440',
           border: 'none',
         }}
-        onClick={() => onCurrencySelect('PKR')}
+        onClick={() => handleCurrencySelect('PKR')}
       >
         PKR
       </button>
-<div className="separator"></div>
+
+      <div className="separator"></div>
+
+     
       <button
         className={`btn btn-sm ${selectedCurrency === 'USD' ? 'selected' : 'unselected'}`}
         style={{
@@ -22,7 +33,7 @@ const Filterbtn = ({ selectedCurrency, onCurrencySelect }) => {
           color: selectedCurrency === 'USD' ? '#019440' : '#019440',
           border: 'none',
         }}
-        onClick={() => onCurrencySelect('USD')}
+        onClick={() => handleCurrencySelect('USD')}
       >
         USD
       </button>
@@ -30,4 +41,4 @@ const Filterbtn = ({ selectedCurrency, onCurrencySelect }) => {
   );
 };
 
-export default Filterbtn;
+export default Filterbtnpkrusd;
