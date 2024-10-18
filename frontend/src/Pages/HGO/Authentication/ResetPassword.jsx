@@ -11,12 +11,12 @@ const ResetPassword = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="login-container">
-        {/* Logo */}
+   
         <div className="text-center mb-4">
           <img src="/assets/logo.png" alt="Logo" className="img-fluid logo" />
         </div>
 
-        {/* Reset Password Form */}
+     
         <form onSubmit={handleResetPassword}>
           <div className="form-group mb-3">
             <label className='label-text'>Email Address</label>
@@ -29,7 +29,7 @@ const ResetPassword = () => {
             />
           </div>
 
-          {/* Reset Password Button */}
+     
           <button type="submit" className="btn w-100 green-btn">
             <span className='white-arrow'>Reset Password</span> 
           </button>

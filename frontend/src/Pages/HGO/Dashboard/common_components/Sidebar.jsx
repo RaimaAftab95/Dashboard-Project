@@ -5,7 +5,7 @@ import OutgoingRequest from './OutgoingRequest';
 import MerchantRequest from './MerchantRequest';
 import RequestButtons from './RequestButtons';
 
-const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a prop
+const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { 
   const [isIncomingModalOpen, setIncomingModalOpen] = useState(false);
   const [isOutgoingModalOpen, setOutgoingModalOpen] = useState(false);
   const [isMerchantModalOpen, setMerchantModalOpen] = useState(false);
@@ -39,17 +39,17 @@ const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a p
 
   return (
     <>
-      {/* Sidebar with Drawer Effect */}
+     
       <div className={`sidebar drawer-sidebar d-flex flex-column ${isOpen ? 'open' : ''}`}>
         <div className="d-flex justify-content-between align-items-center mb-4 sidebar-logo-bg">
           <img src="/assets/logo.png" alt="Logo" className="img-fluid mb-2 logo-img" />
-          {/* Close button for mobile view */}
+         
           <button className="btn close-btn d-md-none" onClick={toggleSidebar}>
             <FaTimes size={15} />
           </button>
         </div>
 
-        {/* Conditionally render RequestButtons component based on rollId */}
+       
         {rollId === 'hgo' && (
           <RequestButtons
             openIncomingModal={openIncomingModal}
@@ -58,7 +58,7 @@ const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a p
           />
         )}
 
-        {/* User Profile Section - Ensure it's at the bottom */}
+       
         <div className="mt-auto d-flex align-items-center justify-content-center mb-3">
           <img
             src="/assets/Ellipse 14.png"
@@ -72,10 +72,8 @@ const Sidebar = ({ isOpen, toggleSidebar, rollId }) => { // Accept rollId as a p
         </div>
       </div>
 
-      {/* Overlay Effect */}
       {isOpen && <div className="overlay" onClick={toggleSidebar}></div>}
 
-      {/* Modals */}
       <IncomingRequest isOpen={isIncomingModalOpen} onClose={closeIncomingModal} />
       <OutgoingRequest isOpen={isOutgoingModalOpen} onClose={closeOutgoingModal} />
       <MerchantRequest isOpen={isMerchantModalOpen} onClose={closeMerchantModal} />

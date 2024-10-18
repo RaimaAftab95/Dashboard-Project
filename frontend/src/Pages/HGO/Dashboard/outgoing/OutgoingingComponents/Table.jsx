@@ -19,7 +19,7 @@ const Table = ({ rollId }) => {
         </thead>
         <tbody>
           <tr>
-            {isMonazam && <td className="tabledata-txt">John Doe</td>} {/* Dummy name for HGO Name */}
+            {isMonazam && <td className="tabledata-txt">John Doe</td>} 
             <td className="tabledata-txt">01-01-2024</td>
             <td className="tabledata-txt">Monazam to OPAP transfer</td>
             <td className="tabledata-txt">USD</td>
@@ -33,7 +33,7 @@ const Table = ({ rollId }) => {
             {!isMonazam && <td className="tabledata-txt">Done</td>}
           </tr>
           <tr>
-            {isMonazam && <td className="tabledata-txt">Jane Smith</td>} {/* Dummy name for HGO Name */}
+            {isMonazam && <td className="tabledata-txt">Jane Smith</td>} 
             <td className="tabledata-txt">02-01-2024</td>
             <td className="tabledata-txt">OPAP to E Hajj transfer</td>
             <td className="tabledata-txt">PKR</td>
@@ -47,7 +47,7 @@ const Table = ({ rollId }) => {
             {!isMonazam && <td className="tabledata-txt">Pending</td>}
           </tr>
           <tr>
-            {isMonazam && <td className="tabledata-txt">John Doe</td>} {/* Dummy name for HGO Name */}
+            {isMonazam && <td className="tabledata-txt">John Doe</td>} 
             <td className="tabledata-txt">03-01-2024</td>
             <td className="tabledata-txt">Monazam to OPAP transfer</td>
             <td className="tabledata-txt">USD</td>
@@ -61,7 +61,7 @@ const Table = ({ rollId }) => {
             {!isMonazam && <td className="tabledata-txt">Done</td>}
           </tr>
           <tr>
-            {isMonazam && <td className="tabledata-txt">Jane Smith</td>} {/* Dummy name for HGO Name */}
+            {isMonazam && <td className="tabledata-txt">Jane Smith</td>} 
             <td className="tabledata-txt">04-01-2024</td>
             <td className="tabledata-txt">OPAP to E Hajj transfer</td>
             <td className="tabledata-txt">EUR</td>
@@ -89,7 +89,7 @@ const Table = ({ rollId }) => {
             {!isMonazam && <td className="tabledata-txt">Done</td>}
           </tr>
           <tr>
-            {isMonazam && <td className="tabledata-txt">Jane Smith</td>} {/* Dummy name for HGO Name */}
+            {isMonazam && <td className="tabledata-txt">Jane Smith</td>} 
             <td className="tabledata-txt">06-01-2024</td>
             <td className="tabledata-txt">OPAP to E Hajj transfer</td>
             <td className="tabledata-txt">PKR</td>

@@ -11,7 +11,7 @@ const TableTransfer = () => {
 
   return (
     <div>
-      {/* Main Table */}
+     
       <div className="table-responsive">
         <table className="table">
           <thead>
@@ -26,7 +26,6 @@ const TableTransfer = () => {
           </tbody>
         </table>
 
-     {/*  Section1  */}
         <div className="dropdown-section mt-4">
           <div className="d-flex justify-content-between align-items-center">
             <span className="hgo-text">Alexander</span>
@@ -62,7 +61,7 @@ const TableTransfer = () => {
 
         <hr />
 
-        {/*  Section2  */}
+     
         <div className="dropdown-section mt-4">
           <div className="d-flex justify-content-between align-items-center">
             <span className="hgo-text">Alexander</span>
@@ -98,7 +97,7 @@ const TableTransfer = () => {
 
         <hr />
 
-        {/* HGO3 Section for Voucher V003 */}
+       
         <div className="dropdown-section mt-4">
           <div className="d-flex justify-content-between align-items-center">
             <span className="hgo-text">Alexander</span>

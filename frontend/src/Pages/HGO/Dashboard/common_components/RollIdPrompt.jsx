@@ -6,7 +6,7 @@ const RollIdPrompt = ({ onRollIdSubmit }) => {
   useEffect(() => {
     const inputRollId = prompt("Please enter your roll ID:")?.toLowerCase() || '';
     setRollId(inputRollId);
-    onRollIdSubmit(inputRollId); // Call the function to pass the roll ID up
+    onRollIdSubmit(inputRollId); 
   }, [onRollIdSubmit]);
 
   return null; 

@@ -14,12 +14,11 @@ const ResetPassword1 = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="login-container">
-        {/* Logo */}
+    
         <div className="text-center mb-4">
           <img src="/assets/logo.png" alt="Logo" className="img-fluid logo" />
         </div>
 
-        {/* Reset Password Form */}
         <form onSubmit={handleResetPassword}>
           <div className="form-group mb-3 position-relative">
             <label className='label-text'>Create New Password</label>
@@ -54,7 +53,7 @@ const ResetPassword1 = () => {
             </span>
           </div>
 
-          {/* Reset Password Button */}
+      
           <button type="submit" className="btn w-100 green-btn">
             <span className='white-arrow'>Modify</span> 
           </button>

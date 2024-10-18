@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 10; // Total number of pages
+  const totalPages = 10; 
 
   const handleNext = () => {
     if (currentPage < totalPages) {
@@ -19,7 +19,7 @@ const Pagination = () => {
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">
-        {/* Previous Button */}
+       
         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
           <button
             className="page-link focus-shadow-none"
@@ -31,12 +31,11 @@ const Pagination = () => {
           </button>
         </li>
 
-        {/* Current Page Number */}
         <li className="page-item active">
           <span className="page-link">{currentPage}</span>
         </li>
 
-        {/* Next Button */}
+     
         <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
           <button
             className="page-link focus-shadow-none"

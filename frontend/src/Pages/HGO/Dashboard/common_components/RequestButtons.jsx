@@ -4,7 +4,7 @@ import { FaPlus } from 'react-icons/fa';
 const RequestButtons = ({ openIncomingModal, openOutgoingModal, openMerchantModal }) => {
   return (
     <>
-      {/* Button for Incoming Requests */}
+      
       <div className="mb-3">
         <button
           className="btn label-text w-100 d-flex justify-content-between align-items-center"
@@ -14,7 +14,6 @@ const RequestButtons = ({ openIncomingModal, openOutgoingModal, openMerchantModa
         </button>
       </div>
 
-      {/* Button for Outgoing Requests */}
       <div className="mb-3">
         <button
           className="btn label-text w-100 d-flex justify-content-between align-items-center"
@@ -24,7 +23,7 @@ const RequestButtons = ({ openIncomingModal, openOutgoingModal, openMerchantModa
         </button>
       </div>
 
-      {/* Button for Merchant Transfer Request */}
+      
       <div className="mb-3">
         <button
           className="btn label-text w-100 d-flex justify-content-between align-items-center"

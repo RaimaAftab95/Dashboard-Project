@@ -12,6 +12,7 @@ const Login = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="login-container">
+      
         <div className="text-center mb-4">
           <img
             src="/assets/logo.png"
@@ -20,12 +21,14 @@ const Login = () => {
           />
         </div>
 
+       
         <form onSubmit={handleLogin}>
+
           <button
             type="submit"
             className="btn w-100 green-btn mb-5 mt-5"
           >
-         <span className='white-arrow'> Login as HGO</span> 
+         <span className='white-arrow'> Signup as HGO</span> 
             <FaArrowRight className="ms-2 white-arrow"/>
           </button>
 
@@ -33,7 +36,7 @@ const Login = () => {
             type="submit"
             className="btn w-100 green-btn"
           >
-         <span className='white-arrow'> Login as Monazam</span> 
+         <span className='white-arrow'> Signup as Monazam</span> 
             <FaArrowRight className="ms-2 white-arrow"/>
           </button>
         </form>

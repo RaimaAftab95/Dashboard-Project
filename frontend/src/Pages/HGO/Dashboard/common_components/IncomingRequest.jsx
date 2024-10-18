@@ -22,7 +22,7 @@ const IncomingRequest = ({ isOpen, onClose }) => {
 
     const { date, narration, currency, amount } = formData;
 
-    // Ensure all fields are filled before submitting
+ 
     if (!date || !narration || !currency || !amount) {
       alert('All fields are required.');
       return;
@@ -40,7 +40,7 @@ const IncomingRequest = ({ isOpen, onClose }) => {
       const data = await response.json();
       if (response.ok) {
         alert('Data saved successfully!');
-        onClose();  // Close modal after successful submission
+        onClose(); 
       } else {
         alert(data.message || 'Failed to save data');
       }

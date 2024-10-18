@@ -9,7 +9,7 @@ const Table = ({ rollId }) => {
 
   return (
     <div>
-      {/* Main Table */}
+     
       <div className="table-responsive">
         <table className="table table-sm">
           <thead>
@@ -55,7 +55,7 @@ const Table = ({ rollId }) => {
           </tbody>
         </table>
 
-        {/* HGO1 Section */}
+       
         <div className="dropdown-section mt-4">
           <div className="flex justify-between items-center">
             {rollId === 'monazam' && (
@@ -116,7 +116,7 @@ const Table = ({ rollId }) => {
 
         <hr />
 
-        {/* HGO2 Section */}
+       
         <div className="dropdown-section mt-4">
           <div className="flex justify-between items-center">
             {rollId === 'monazam' && (

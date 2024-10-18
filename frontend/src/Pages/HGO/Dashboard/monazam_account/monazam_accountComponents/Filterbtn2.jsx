@@ -3,7 +3,7 @@ import React from 'react';
 const Filterbtn2 = () => {
   return (
     <div className="ms-4 mb-4 flex flex-wrap space-x-2 space-y-2 sm:space-y-0 justify-start">
-      {/* HGOs Dropdown */}
+      
       <div className="dropdown">
         <button className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle me-2 mb-2" type="button" id="hgosDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           HGOs
@@ -13,7 +13,7 @@ const Filterbtn2 = () => {
         </ul>
       </div>
 
-      {/* Date Dropdown */}
+   
       <div className="dropdown">
         <button className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle me-2 mb-2" type="button" id="dateDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           Date
@@ -23,7 +23,7 @@ const Filterbtn2 = () => {
         </ul>
       </div>
 
-      {/* Incomings Dropdown */}
+     
       <div className="dropdown">
         <button className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle me-2 mb-2" type="button" id="incomingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           Incomings
@@ -33,7 +33,6 @@ const Filterbtn2 = () => {
         </ul>
       </div>
 
-      {/* Outgoings Dropdown */}
       <div className="dropdown">
         <button className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle me-2 mb-2" type="button" id="outgoingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           Outgoings
@@ -43,7 +42,7 @@ const Filterbtn2 = () => {
         </ul>
       </div>
 
-      {/* Types Dropdown */}
+    
       <div className="dropdown">
         <button className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle me-2 mb-2" type="button" id="typesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           Types

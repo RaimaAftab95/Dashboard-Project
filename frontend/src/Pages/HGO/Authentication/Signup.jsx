@@ -29,7 +29,7 @@ const Signup = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="login-container">
-        {/* Logo */}
+      
         <div className="text-center mb-4">
           <img
             src="/assets/logo.png"
@@ -38,7 +38,7 @@ const Signup = () => {
           />
         </div>
 
-        {/* Signup form */}
+      
         <form onSubmit={handleSignup}>
           <div className="form-group mb-3">
             <label className='label-text'>Monazam Account Name</label>

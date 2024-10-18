@@ -3,8 +3,8 @@ import React from 'react';
 const Filterbtn = ({ rollId }) => {
   return (
     <div className="ms-4 mb-4 d-flex">
-      {/* Conditionally add the HGO Dropdown for 'monazam' rollId */}
-      {rollId === 'monazam' ? ( // Show HGO button if rollId is 'monazam'
+     
+      {rollId === 'monazam' ? ( 
         <div className="dropdown me-2">
           <button
             className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle"
@@ -19,9 +19,8 @@ const Filterbtn = ({ rollId }) => {
             <li><a className="dropdown-item" href="#">HGO Option</a></li>
           </ul>
         </div>
-      ) : null} {/* Hide HGO button if rollId is not 'monazam' */}
+      ) : null} 
 
-      {/* Date Dropdown */}
       <div className="dropdown me-2">
         <button
           className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle"
@@ -37,7 +36,6 @@ const Filterbtn = ({ rollId }) => {
         </ul>
       </div>
 
-      {/* Currency Dropdown */}
       <div className="dropdown me-2">
         <button
           className="btn shadow filter-btn btn-sm btn-outline-secondary dropdown-toggle"

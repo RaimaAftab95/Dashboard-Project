@@ -6,22 +6,21 @@ import RollIdPrompt from '../common_components/RollIdPrompt';
 
 const IncomingDashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [rollId, setRollId] = useState(''); // State to store the roll ID
+  const [rollId, setRollId] = useState(''); 
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
   const handleRollIdSubmit = (id) => {
-    setRollId(id); // Update the roll ID state
+    setRollId(id); 
   };
 
   return (
     <div className="container-fluid dashboard-layout m-0 p-0">
-      {/* Overlay Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId} /> {/* Pass rollId to Sidebar */}
+   
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId} /> 
 
-      {/* Main Content */}
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
         {/* Hamburger Menu for mobile screens */}
         <div className="d-md-none d-flex justify-content-between align-items-center sidebar-logo-bg py-3 px-1">
@@ -32,10 +31,8 @@ const IncomingDashboard = () => {
           <img src="/assets/logo.png" alt="Logo" className="img-fluid logo pe-5" style={{ height: '40px' }} />
         </div>
 
-        {/* Roll ID Prompt */}
         <RollIdPrompt onRollIdSubmit={handleRollIdSubmit} />
 
-        {/* Pass the rollId to MainContent */}
         <MainContent rollId={rollId} />
       </div>
     </div>

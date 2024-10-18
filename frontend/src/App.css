@@ -426,3 +426,15 @@ body {
   width: 45px !important;
   margin-bottom: 3px;
 }
+.add-button {
+  background-color: #cffce1;
+  width: 60px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 10px;
+  border: none !important;
+}
+.greenplusbtn {
+  color: #019440 !important;
+  font-size: 20px !important;
+}

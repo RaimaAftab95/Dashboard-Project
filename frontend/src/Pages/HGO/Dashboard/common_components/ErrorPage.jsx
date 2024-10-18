@@ -12,7 +12,6 @@ const ErrorPage = () => {
   return (
     <div className="mt-5 d-flex flex-column align-items-center justify-content-center text-center error-page">
      
-      {/* <FaExclamationTriangle className="error-icon text-warning mb-4" size={50} /> */}
          <FaExclamationTriangle className="error-icon text-danger mb-4" size={50} />
 
      

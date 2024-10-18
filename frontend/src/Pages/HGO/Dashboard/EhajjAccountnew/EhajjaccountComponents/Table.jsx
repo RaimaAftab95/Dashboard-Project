@@ -9,7 +9,7 @@ const Table = ({ rollId }) => {
 
   return (
     <div>
-      {/* Main Table */}
+      
       <div className="table-responsive">
         <table className="table table-sm">
           <thead>
@@ -55,7 +55,6 @@ const Table = ({ rollId }) => {
           </tbody>
         </table>
 
-        {/* HGO1 Section */}
         <div className="dropdown-section mt-4">
           <div className="flex justify-between items-center">
             {rollId === 'monazam' && (
@@ -90,8 +89,8 @@ const Table = ({ rollId }) => {
                   <td className="tabledata-txt">Completed</td>
                   {rollId === 'monazam' && (
                     <td className="tabledata-txt">
-                      <button className="btn btn-sm approved-btn me-2">Approve</button>
-                      <button className="btn btn-sm rejectbtn">Reject</button>
+                      <button className="btn btn-sm btn-compact me-2">Approve</button>
+                      <button className="btn btn-sm btn-compactreject">Reject</button>
                     </td>
                   )}
                 </tr>
@@ -116,7 +115,6 @@ const Table = ({ rollId }) => {
 
         <hr />
 
-        {/* HGO2 Section */}
         <div className="dropdown-section mt-4">
           <div className="flex justify-between items-center">
             {rollId === 'monazam' && (

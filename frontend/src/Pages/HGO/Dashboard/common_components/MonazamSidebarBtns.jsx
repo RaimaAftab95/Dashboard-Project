@@ -10,7 +10,7 @@ const MonazamSidebarBtns = () => {
 
   return (
     <div>
-      {/* Button for Monazam to OPAP */}
+     
       <div className="mb-3">
         <button
           className="btn label-text w-100 d-flex justify-content-between align-items-center"
@@ -27,7 +27,7 @@ const MonazamSidebarBtns = () => {
 
         <div className="mt-2 border p-2 rounded">
     <div className="d-flex align-items-center">
-      {/* PKR and SAR labels above input fields */}
+    
       <div className="d-flex flex-column align-items-center">
         <span className="text-muted me-5" style={{ fontSize: '0.5rem' }}>PKR</span>
         <input
@@ -54,7 +54,7 @@ const MonazamSidebarBtns = () => {
         )}
       </div>
 
-      {/* Button for Monazam to Ehajj */}
+     
       <div className="mb-3">
         <button
           className="btn label-text w-100 d-flex justify-content-between align-items-center"
@@ -70,7 +70,7 @@ const MonazamSidebarBtns = () => {
         {showDropdown && (
                   <div className="mt-2 border p-2 rounded">
     <div className="d-flex align-items-center">
-      {/* PKR and SAR labels above input fields */}
+    
       <div className="d-flex flex-column align-items-center">
         <span className="text-muted me-5" style={{ fontSize: '0.5rem' }}>PKR</span>
         <input
