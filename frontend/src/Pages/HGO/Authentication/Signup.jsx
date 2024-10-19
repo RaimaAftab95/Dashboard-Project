@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import axios from 'axios';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
 
 const Signup = () => {
@@ -21,9 +22,56 @@ const Signup = () => {
   const [fcySwiftCode, setFcySwiftCode] = useState('');
   const [iban, setIban] = useState('');
 
-  const handleSignup = (e) => {
+  const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/companies');
+        setCompanies(response.data);
+      } catch (error) {
+        console.error('Error fetching company data:', error);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
+
+
+  const handleSignup = async (e) => {
     e.preventDefault();
-    console.log('Signup details:', accountName, email, phone, focalPerson, number, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode);
+    
+    const signupData = {
+      accountName,
+      email,
+      phone,
+      focalPerson,
+      number,
+      newPassword,
+      pkrIban,
+      pkrAccountTitle,
+      pkrBankName,
+      pkrBranchName,
+      pkrSwiftCode,
+      fcyIban,
+      fcyAccountTitle,
+      fcyBankName,
+      fcyBranchName,
+      fcySwiftCode
+    };
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/signup', signupData);
+      setSuccessMessage('Signup successful!');
+      console.log('Signup successful:', response.data);
+      setLoading(false);
+    } catch (error) {
+      setError('Signup failed. Please try again.');
+      console.error('Signup failed:', error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,13 +90,22 @@ const Signup = () => {
         <form onSubmit={handleSignup}>
           <div className="form-group mb-3">
             <label className='label-text'>Monazam Account Name</label>
-            <input
-              type="text"
+            <select
               className="form-control input-style"
-              placeholder="Company Name"
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
-            />
+            >
+              <option value="">Select Company Name</option>
+              {companies && companies.length > 0 ? (
+                companies.map((company, index) => (
+                  <option key={index} value={company.company_name}>
+                    {company.company_name}
+                  </option>
+                ))
+              ) : (
+                <option value="">No companies available</option>
+              )}
+            </select>
           </div>
 
           <div className="form-group mb-3 d-flex justify-content-between">
@@ -238,8 +295,13 @@ const Signup = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 green-btn label-text">
-            Sign-Up
+ {/* Success or error messages */}
+          {error && <p className="text-danger">{error}</p>}
+          {successMessage && <p className="text-success">{successMessage}</p>}
+
+          <button type="submit" className="btn btn-primary w-100 green-btn label-text"  disabled={loading}>
+          {loading ? 'Signing Up...' : 'Sign-Up'}
+        
           </button>
         </form>
 

@@ -21,21 +21,21 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleLogin}>
-          <button
-            type="submit"
+          <a
+            href='/login?role=hgo'
             className="btn w-100 green-btn mb-5 mt-5"
           >
          <span className='white-arrow'> Login as HGO</span> 
             <FaArrowRight className="ms-2 white-arrow"/>
-          </button>
+          </a>
 
-          <button
-            type="submit"
+          <a
+            href='/login?role=monazam' 
             className="btn w-100 green-btn"
           >
          <span className='white-arrow'> Login as Monazam</span> 
             <FaArrowRight className="ms-2 white-arrow"/>
-          </button>
+          </a>
         </form>
 
       </div>

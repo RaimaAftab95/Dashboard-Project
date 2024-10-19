@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 import Login from './Pages/HGO/Authentication/Login';  
 import Loginmain from './Pages/HGO/Authentication/Loginmain';
-import Signupmain from './Pages/HGO/Authentication/Signupmain';
+//import Signupmain from './Pages/HGO/Authentication/Signupmain';
 import Signup from './Pages/HGO/Authentication/Signup'; 
 import ResetPassword from './Pages/HGO/Authentication/ResetPassword';
 import ResetPassword1 from './Pages/HGO/Authentication/ResetPassword1'; 
@@ -20,8 +20,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/loginmain" element={<Loginmain />} />
-           <Route path="/signupmain" element={<Signupmain />} />
+          <Route path="/login" element={<Loginmain />} />
+           {/* <Route path="/signupmain" element={<Signupmain />} /> */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/resetpassword1" element={<ResetPassword1 />} />
