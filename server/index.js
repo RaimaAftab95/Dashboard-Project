@@ -83,6 +83,13 @@ app.delete('/api/companies/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting data', error: error.message });
   }
 });
+//------------------------api to get role_id-----------------------------------------------
+app.get('/roles', async (req, res) => {
+  const query = 'SELECT * FROM roles';
+  const [rows] = await pool.query(query);
+  res.json(rows); // Sends the roles to the frontend
+});
+
 //-----------------------api hgo company-------------------------------------------------------
 app.post('/api/company_hgo', async (req, res) => {
   const { company_name, enrollment_no } = req.body;
@@ -98,21 +105,22 @@ app.post('/api/company_hgo', async (req, res) => {
 });
 //-----------------------api for signUp---------------------------------------------------------
 app.post('/api/signup', [
+  // Validate email
   check('email').isEmail().withMessage('Enter a valid email address'),
   check('newPassword').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
-  
+ 
   // Validate accountName
   check('accountName').notEmpty().withMessage('Account Name is required'),
-  
-  // Validate phone number (adjust the regex for your specific phone number format)
-  check('phone').isMobilePhone().withMessage('Enter a valid phone number'),
-  
+
+  // Validate phone number with regex (accepts 10 to 15 digits with an optional leading "+")
+  check('phone').matches(/^[+]?[0-9]{10,15}$/).withMessage('Enter a valid phone number'),
+
   // Validate focalPerson
   check('focalPerson').notEmpty().withMessage('Focal person is required'),
-  
+
   // Validate number (ensure it is numeric)
   check('number').isNumeric().withMessage('Number must be numeric'),
-  
+
   // Validate PKR IBAN and Bank details
   check('pkrIban').matches(/^[A-Za-z0-9]+$/).withMessage('Enter a valid PKR IBAN'),
   check('pkrAccountTitle').notEmpty().withMessage('PKR Account Title is required'),
@@ -139,40 +147,53 @@ app.post('/api/signup', [
     accountName, email, phone, focalPerson, number, newPassword, 
     pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, 
     fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, 
-    role_id, monazam_id // Add role_id and monazam_id from the frontend
+    role_id, monazam_id
   } = req.body;
 
   try {
-  
+    // Check if the email already exists in the database
+    const emailCheckQuery = 'SELECT * FROM users WHERE email = ?';
+    const [existingUser] = await mysqlPool.query(emailCheckQuery, [email]);
+
+    console.log('Existing user:', existingUser); // Add this log to see if the query returns a result
+
+    if (existingUser.length > 0) {
+      return res.status(400).json({ message: 'Email is already in use' });
+    }
+
+    // Hash the password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Save user details in the database
+    // Insert user into the database
     const query = `
-      INSERT INTO users (name, email, phone, focal_person, number, password, 
-        pkr_iban, pkr_account_title, pkr_bank_name, pkr_branch_name, pkr_swift_code, 
-        fcy_iban, fcy_account_title, fcy_bank_name, fcy_branch_name, fcy_swift_code, role_id, monazam_id) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      INSERT INTO users (accountName, email, phone, focalPerson, number, password, 
+        pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, 
+        fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, role_id, monazam_id) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
-    await db.query(query, [
+    await mysqlPool.query(query, [
       accountName, email, phone, focalPerson, number, hashedPassword,
       pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode,
       fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode,
-      role_id, monazam_id // Insert role and Monazam ID here
+      role_id, monazam_id
     ]);
 
     res.status(201).json({ message: 'Signup successful!' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error during signup' });
+    console.error('Error during signup:', error.message);
+    res.status(500).json({ message: 'Server error during signup', error: error.message });
   }
 });
+
 //-----------------------login----------------------------------------------------------------
 
 app.post('/api/login', async (req, res) => {
-  const { enrollment_no, password } = req.body;
+  const { enrollmentNumber, password } = req.body;
 
   try {
     // Check if the user exists
-    const [user] = await mysqlPool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const [user] = await mysqlPool.query('SELECT * FROM users WHERE enrollmentNumber = ?', [enrollmentNumber]);
 
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
