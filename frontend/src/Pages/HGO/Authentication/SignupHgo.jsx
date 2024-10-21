@@ -108,6 +108,27 @@ const Signup = () => {
             </select>
           </div>
 
+       <div className="form-group mb-3">
+            <label className='label-text'>HGO Name</label>
+            <input
+              type="text"
+              className="form-control input-style"
+              placeholder="For Ex:0303XXXXX32"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
+            />
+          </div>
+
+  <div className="form-group mb-3">
+            <label className='label-text'>Enrolment Number</label>
+            <input
+              type="text"
+              className="form-control input-style"
+              placeholder="For Ex:0303XXXXX32"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
+            />
+          </div>
           <div className="form-group mb-3 d-flex justify-content-between">
             <div className="w-50 me-2">
               <label className='label-text'>Email</label>
