@@ -25,7 +25,7 @@ const Loginmain = () => {
           <div className="form-group mb-3">
             <label className='label-text'>Enrollment Number</label>
             <input
-              type="email"
+              type="number"
               className="form-control input-style"
               placeholder="02345643432"
               value={email}
@@ -59,6 +59,7 @@ const Loginmain = () => {
 
           <button
             type="submit"
+            href="/incoming"
             className="btn w-100 green-btn"
           >
          <span className='white-arrow'> Login</span> 

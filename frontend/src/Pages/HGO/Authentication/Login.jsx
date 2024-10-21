@@ -1,14 +1,17 @@
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
- 
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // console.log('Login details:', email, password);
+  const handleLoginAsHGO = () => {
+    navigate('/login?role=hgo&id=2'); 
   };
 
+  const handleLoginAsMonazam = () => {
+    navigate('/login?role=monazam&id=1'); 
+  };
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="login-container">
@@ -20,22 +23,24 @@ const Login = () => {
           />
         </div>
 
-        <form onSubmit={handleLogin}>
-          <a
-            href='/login?role=hgo'
+        <form>
+          <button
+            type="button"
+            onClick={handleLoginAsHGO}
             className="btn w-100 green-btn mb-5 mt-5"
           >
-         <span className='white-arrow'> Login as HGO</span> 
-            <FaArrowRight className="ms-2 white-arrow"/>
-          </a>
+            <span className='white-arrow'>Login as HGO</span>
+            <FaArrowRight className="ms-2 white-arrow" />
+          </button>
 
-          <a
-            href='/login?role=monazam' 
+          <button
+            type="button"
+            onClick={handleLoginAsMonazam}
             className="btn w-100 green-btn"
           >
-         <span className='white-arrow'> Login as Monazam</span> 
-            <FaArrowRight className="ms-2 white-arrow"/>
-          </a>
+            <span className='white-arrow'>Login as Monazam</span>
+            <FaArrowRight className="ms-2 white-arrow" />
+          </button>
         </form>
 
       </div>
