@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Table = ({ rollId }) => {
-  const isMonazam = rollId === 'monazam';
+  const isMonazam = rollId === '1';
 
   return (
     <div className="table-responsive">

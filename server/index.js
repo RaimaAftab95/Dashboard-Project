@@ -13,6 +13,13 @@ app.use(morgan("dev"));
 require('dotenv').config();
 app.use(bodyParser.json());
 
+// jwtSecret
+const crypto = require('crypto');
+const secretKey = crypto.randomBytes(64).toString('hex');
+console.log(secretKey);
+
+
+
 // Create MySQL connection pool
 const mysqlPool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -86,7 +93,7 @@ app.delete('/api/companies/:id', async (req, res) => {
 //------------------------api to get role_id-----------------------------------------------
 app.get('/roles', async (req, res) => {
   const query = 'SELECT * FROM roles';
-  const [rows] = await pool.query(query);
+  const [rows] = await mysqlPool.query(query);
   res.json(rows); // Sends the roles to the frontend
 });
 
@@ -104,11 +111,11 @@ app.post('/api/company_hgo', async (req, res) => {
   }
 });
 //-----------------------api for signUp---------------------------------------------------------
-app.post('/api/signup', [
+app.post('/api/signupmonazam', [
   // Validate email
   check('email').isEmail().withMessage('Enter a valid email address'),
   check('newPassword').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
- 
+
   // Validate accountName
   check('accountName').notEmpty().withMessage('Account Name is required'),
 
@@ -117,9 +124,6 @@ app.post('/api/signup', [
 
   // Validate focalPerson
   check('focalPerson').notEmpty().withMessage('Focal person is required'),
-
-  // Validate number (ensure it is numeric)
-  check('number').isNumeric().withMessage('Number must be numeric'),
 
   // Validate PKR IBAN and Bank details
   check('pkrIban').matches(/^[A-Za-z0-9]+$/).withMessage('Enter a valid PKR IBAN'),
@@ -134,51 +138,83 @@ app.post('/api/signup', [
   check('fcyBankName').notEmpty().withMessage('FCY Bank Name is required'),
   check('fcyBranchName').notEmpty().withMessage('FCY Branch Name is required'),
   check('fcySwiftCode').notEmpty().withMessage('FCY Swift Code is required'),
+  
+  // Validate E-Hajj IBAN
+  check('e_hajj_iban').matches(/^[A-Z]{2}\d{2}[A-Za-z0-9]{1,30}$/).withMessage('Enter a valid E-Hajj IBAN'),
 
-  // Validate role_id
-  check('role_id').isIn([1, 2]).withMessage('Role ID must be either 1 (Monazam) or 2 (HGO)'),
 ], async (req, res) => {
   const errors = validationResult(req);
+  
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
   const {
-    accountName, email, phone, focalPerson, number, newPassword, 
+    accountName, email, phone, focalPerson, newPassword, 
     pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, 
-    fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, 
-    role_id, monazam_id
+    fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode,
+    e_hajj_iban,
   } = req.body;
 
   try {
     // Check if the email already exists in the database
-    const emailCheckQuery = 'SELECT * FROM users WHERE email = ?';
-    const [existingUser] = await mysqlPool.query(emailCheckQuery, [email]);
-
-    console.log('Existing user:', existingUser); // Add this log to see if the query returns a result
-
+    const [existingUser] = await mysqlPool.query('SELECT * FROM monazam WHERE email = ?', [email]);
     if (existingUser.length > 0) {
-      return res.status(400).json({ message: 'Email is already in use' });
+      return res.status(409).json({ message: 'Email is already in use' });
+    }
+
+    // Fetch enrollment number and company name based on accountName
+    const [company] = await mysqlPool.query('SELECT company_name, enrollment_no FROM companies WHERE company_name = ?', [accountName]);
+    if (company.length === 0) {
+      return res.status(400).json({ message: 'Selected company not found' });
+    }
+
+    const enrollment = company[0].enrollment_no; // Store enrollment number
+
+    // Check if the enrollment number already exists
+    const [existingCompanyUser] = await mysqlPool.query('SELECT * FROM monazam WHERE enrollment = ?', [enrollment]);
+    if (existingCompanyUser.length > 0) {
+      return res.status(409).json({ message: 'User already exists for the selected company. Choose a different company name.' });
     }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Insert user into the database
-    const query = `
-      INSERT INTO users (accountName, email, phone, focalPerson, number, password, 
+    // Log the SQL query and parameters before executing
+    console.log('SQL Query: ', `
+      INSERT INTO monazam (
+        accountName, enrollment, email, phone, focalPerson, newPassword, 
         pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, 
-        fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, role_id, monazam_id) 
+        fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, 
+        e_hajj_iban, role_id
+      ) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    await mysqlPool.query(query, [
-      accountName, email, phone, focalPerson, number, hashedPassword,
+    `);
+    console.log('Parameters: ', [
+      accountName, enrollment, email, phone, focalPerson, hashedPassword,
       pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode,
       fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode,
-      role_id, monazam_id
+      e_hajj_iban, 
+      1 // Role ID is set to 1 for all Monazam users
     ]);
 
+    // Insert user into the database with role_id always set to 1
+    await mysqlPool.query(`
+      INSERT INTO monazam (
+        accountName, enrollment, email, phone, focalPerson, newPassword, 
+        pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, 
+        fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, 
+        e_hajj_iban, role_id
+      ) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [
+      accountName, enrollment, email, phone, focalPerson, hashedPassword,
+      pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode,
+      fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode,
+      e_hajj_iban, 
+      1 // Role ID is set to 1 for all Monazam users
+    ]);
+    
     res.status(201).json({ message: 'Signup successful!' });
   } catch (error) {
     console.error('Error during signup:', error.message);
@@ -186,39 +222,110 @@ app.post('/api/signup', [
   }
 });
 
-//-----------------------login----------------------------------------------------------------
+//-----------------------login as both monazam and ----------------------------------------------------------------
 
 app.post('/api/login', async (req, res) => {
-  const { enrollmentNumber, password } = req.body;
+  const { enrollmentNumber, password, userType } = req.body;
 
   try {
-    // Check if the user exists
-    const [user] = await mysqlPool.query('SELECT * FROM users WHERE enrollmentNumber = ?', [enrollmentNumber]);
+    const role_id = userType === 'monazam' ? 1 : userType === 'hgo' ? 2 : null;
 
-    if (!user) {
+    if (!role_id) {
+      return res.status(400).json({ message: 'Invalid user type' });
+    }
+
+    // Check if the user exists in the appropriate table
+    const tableName = role_id === 1 ? 'monazam' : 'hgo'; 
+    const [user] = await mysqlPool.query(`SELECT * FROM ${tableName} WHERE enrollment = ?`, [enrollmentNumber]);
+
+    // Log the retrieved user data for debugging
+    console.log('Retrieved user:', user);
+
+    if (!user.length) {
       return res.status(400).json({ message: 'User not found' });
     }
 
+    const retrievedUser = user[0];
+
     // Verify password
-    const validPassword = await bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(password, retrievedUser.newPassword);
     if (!validPassword) {
       return res.status(401).json({ message: 'Invalid password' });
     }
 
-    // Generate a JWT token
     const token = jwt.sign(
-      { id: user.id, role_id: user.role_id, monazam_id: user.monazam_id },
-      'yourSecretKey',
+      { id: retrievedUser.id, role_id: retrievedUser.role_id, enrollmentNumber },
+      process.env.JWT_SECRET, 
       { expiresIn: '1h' }
     );
 
-    // Send the token back to the frontend
-    res.status(200).json({ token, role_id: user.role_id });
+    res.status(200).json({ token, role_id: retrievedUser.role_id, enrollmentNumber });
   } catch (error) {
+    console.error(error); // Log the error for debugging
     res.status(500).json({ message: 'Server error during login' });
   }
 });
+//--------------------------signup as hgo---------------------------------------------------------
+// POST route for HGO signup
+app.post('/hgo/signup', async (req, res) => {
+  const { accountName, hgoname, enrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban } = req.body;
 
+  // Fetch Monazam data based on selected accountName
+  const monazamData = await db.query('SELECT id, email, enrollment FROM monazam WHERE accountName = ?', [accountName]);
+
+  if (monazamData.length === 0) {
+      return res.status(400).send('Monazam not found');
+  }
+
+  const monazam_id = monazamData[0].id;
+  const monazam_email = monazamData[0].email;
+  const monazam_enrollment_no = monazamData[0].enrollment;
+
+  // Generate a unique HGO enrollment number
+  const hgoenrollment = generateUniqueEnrollment();
+
+  // Save data in the temporary table
+  await mysqlPool.query('INSERT INTO temporary_hgo_signup (accountName, monazam_id, monazam_email, monazam_enrollment, hgoname, enrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [accountName, monazam_id, monazam_email, monazam_enrollment_no, hgoname, enrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban]);
+
+  // Send email to Monazam with approve/reject buttons
+  sendApprovalEmail(monazam_email, hgoname, enrollment);
+
+  res.status(200).send('Signup data submitted. Awaiting Monazam approval.');
+});
+
+// Approve HGO signup
+app.get('/hgo/approve', async (req, res) => {
+  const { enrollment } = req.query;
+
+  // Fetch data from temporary table
+  const hgoData = await db.query('SELECT * FROM temporary_hgo_signup WHERE hgoenrollment = ?', [enrollment]);
+
+  if (hgoData.length === 0) {
+      return res.status(404).send('No pending HGO signup found');
+  }
+
+  const hgo = hgoData[0];
+
+  // Save approved HGO data in hgo_users table
+  await db.query('INSERT INTO hgo_users (monazam_id, accountName, hgoname, hgoenrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [hgo.monazam_id, hgo.accountName, hgo.hgoname, hgo.hgoenrollment, hgo.email, hgo.phone, hgo.focalPerson, hgo.newPassword, hgo.pkrIban, hgo.pkrAccountTitle, hgo.pkrBankName, hgo.pkrBranchName, hgo.pkrSwiftCode, hgo.fcyIban, hgo.fcyAccountTitle, hgo.fcyBankName, hgo.fcyBranchName, hgo.fcySwiftCode, hgo.e_hajj_iban]);
+
+  // Delete from temporary table
+  await db.query('DELETE FROM temporary_hgo_signup WHERE hgoenrollment = ?', [enrollment]);
+
+  res.send('HGO approved successfully');
+});
+
+// Reject HGO signup
+app.get('/hgo/reject', async (req, res) => {
+  const { enrollment } = req.query;
+
+  // Delete from temporary table
+  await db.query('DELETE FROM temporary_hgo_signup WHERE hgoenrollment = ?', [enrollment]);
+
+  res.send('HGO signup rejected');
+});
 
 //-----------------------api for incoming_request----------------------------------------------
 

@@ -26,12 +26,10 @@ const Signupmain = () => {
             className="img-fluid logo"
           />
         </div>
-
         <form>
-          <div className="d-flex flex-column flex-md-row gap-3">
             <button
               type="button"
-              className="btn w-100 green-btn"
+              className="btn w-100 green-btn mb-5 mt-5"
               onClick={handleSignupHgo}
             >
               <span className='white-arrow'>Signup HGO</span> 
@@ -46,7 +44,6 @@ const Signupmain = () => {
               <span className='white-arrow'>Signup Monazam</span> 
               <FaArrowRight className="ms-2 white-arrow" />
             </button>
-          </div>
         </form>
 
       </div>

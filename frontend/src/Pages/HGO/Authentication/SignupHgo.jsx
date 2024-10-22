@@ -4,6 +4,8 @@ import {FaEye, FaEyeSlash} from 'react-icons/fa';
 
 const Signup = () => {
   const [accountName, setAccountName] = useState('');
+  const [hgoname, setHgoName] = useState('');
+  const [hgoenrollment, setEnrollment] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [focalPerson, setFocalPerson] = useState('');
@@ -20,7 +22,7 @@ const Signup = () => {
   const [fcyBankName, setFcyBankName] = useState('');
   const [fcyBranchName, setFcyBranchName] = useState('');
   const [fcySwiftCode, setFcySwiftCode] = useState('');
-  const [iban, setIban] = useState('');
+  const [e_hajj_iban, setIban] = useState('');
 
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false); 
@@ -45,10 +47,11 @@ const Signup = () => {
     
     const signupData = {
       accountName,
+      hgoname,
+      hgoenrollment,
       email,
       phone,
       focalPerson,
-      number,
       newPassword,
       pkrIban,
       pkrAccountTitle,
@@ -59,7 +62,8 @@ const Signup = () => {
       fcyAccountTitle,
       fcyBankName,
       fcyBranchName,
-      fcySwiftCode
+      fcySwiftCode,
+      e_hajj_iban
     };
 
     try {
@@ -113,9 +117,9 @@ const Signup = () => {
             <input
               type="text"
               className="form-control input-style"
-              placeholder="For Ex:0303XXXXX32"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
+              placeholder="Hgo name"
+              value={hgoname}
+              onChange={(e) => setHgoName(e.target.value)}
             />
           </div>
 
@@ -124,9 +128,9 @@ const Signup = () => {
             <input
               type="text"
               className="form-control input-style"
-              placeholder="For Ex:0303XXXXX32"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
+              placeholder="For Ex:0000"
+              value={hgoenrollment}
+              onChange={(e) => setEnrollment(e.target.value)}
             />
           </div>
           <div className="form-group mb-3 d-flex justify-content-between">
@@ -311,7 +315,7 @@ const Signup = () => {
               type="text"
               className="form-control input-style"
               placeholder="IBAN"
-              value={iban}
+              value={e_hajj_iban}
               onChange={(e) => setIban(e.target.value)}
             />
           </div>

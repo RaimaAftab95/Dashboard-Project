@@ -20,9 +20,9 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Loginmain />} />
-           <Route path="/signupmain" element={<Signupmain />} />
+          {/* <Route path="/" element={<Login />} /> */}
+          <Route path="/" element={<Loginmain />} />
+           <Route path="/createaccount" element={<Signupmain />} />
           <Route path="/signuphgo" element={<SignupHgo />} />
             <Route path="/signupmonazam" element={<SignupMonazam />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
