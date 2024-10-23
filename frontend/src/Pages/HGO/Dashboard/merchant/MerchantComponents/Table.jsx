@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRollId } from '../../common_components/RollIdContext';// Import the hook
 
-const Table = ({ rollId }) => {
+const Table = () => {
+  const { rollId } = useRollId(); // Use the context to get rollId
   const isMonazam = rollId === '1';
   const [data, setData] = useState([]); // State to store fetched data
   const [loading, setLoading] = useState(true); // State to manage loading state

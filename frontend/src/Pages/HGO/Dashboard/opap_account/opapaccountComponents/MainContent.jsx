@@ -5,8 +5,9 @@ import Table from './Table';
 import TableTransfer from './TableTransfer';
 import Pagination from './Pagination';
 import { FaLock, FaPlus } from 'react-icons/fa'; 
+import { useRollId } from '../../common_components/RollIdContext';// Import the hook
 
-const MainContent = ({ rollId }) => {
+const MainContent = () => {
   const [isTransferMode, setIsTransferMode] = useState(false); 
   const [selectedCurrency, setSelectedCurrency] = useState('PKR');
 
@@ -19,6 +20,7 @@ const MainContent = ({ rollId }) => {
   const handleCurrencySelect = (currency) => {
     setSelectedCurrency(currency); 
   };
+ const { rollId } = useRollId(); // Get rollId from context
 
   return (
     <div className="main-content1">
@@ -74,7 +76,7 @@ const MainContent = ({ rollId }) => {
           {isTransferMode ? (
             <TableTransfer />
           ) : (
-            <Table rollId={rollId} />
+            <Table  />
           )}
         
           <div className="d-flex justify-content-between align-items-center mt-5">

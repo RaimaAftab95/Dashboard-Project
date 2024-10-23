@@ -4,7 +4,8 @@ import Filters from './Filterbtn';
 import Table from './Table'; 
 import TableTransfer from './TableTransfer';
 import Pagination from './Pagination';
-import { FaLock, FaPlus } from 'react-icons/fa'; 
+import { FaLock, FaPlus } from 'react-icons/fa';
+import { useRollId } from '../../common_components/RollIdContext';// Import the hook 
 
 const MainContent = ({ rollId }) => {
   const [isTransferMode, setIsTransferMode] = useState(false); 

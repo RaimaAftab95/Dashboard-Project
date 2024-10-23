@@ -3,6 +3,7 @@ import AccSidebar from '../common_components/Accumulativesidebar';
 import MainContent from './monazam_accountComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import RollIdPrompt from '../common_components/RollIdPrompt';
+import { RollIdProvider } from '../common_components/RollIdContext'; // Import the provider
 
 
 const MonazamAccount = () => {
@@ -18,6 +19,7 @@ const MonazamAccount = () => {
   };
 
   return (
+    <RollIdProvider> {/* Wrap everything inside the RollIdProvider */}
     <div className="container-fluid  dashboard-layout m-0 p-0">
     
       <AccSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId} />
@@ -38,6 +40,7 @@ const MonazamAccount = () => {
         <MainContent rollId={rollId} />
       </div>
     </div>
+     </RollIdProvider>
   );
 };
 

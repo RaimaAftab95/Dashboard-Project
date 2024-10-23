@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRollId } from '../../common_components/RollIdContext';// Import the hook
 
 const TableTransfer = () => {
   const [showHGO1, setShowHGO1] = useState(false);
@@ -9,6 +10,7 @@ const TableTransfer = () => {
   const toggleHGO2 = () => setShowHGO2(!showHGO2);
   const toggleHGO3 = () => setShowHGO3(!showHGO3);
 
+   const { rollId } = useRollId(); // Get rollId from context
   return (
     <div>
      

@@ -3,6 +3,7 @@ import AccSidebar from '../common_components/Accumulativesidebar';
 import MainContent from './EhajjaccountComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import RollIdPrompt from '../common_components/RollIdPrompt';
+import { RollIdProvider } from '../common_components/RollIdContext'; // Import the provider
 
 const EhajjAccount = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -17,6 +18,7 @@ const EhajjAccount = () => {
   };
 
   return (
+    <RollIdProvider> {/* Wrap everything inside the RollIdProvider */}
     <div className="container-fluid  dashboard-layout m-0 p-0">
       
       <AccSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId} />
@@ -36,6 +38,7 @@ const EhajjAccount = () => {
         <MainContent rollId={rollId}/>
       </div>
     </div>
+    </RollIdProvider>
   );
 };
 

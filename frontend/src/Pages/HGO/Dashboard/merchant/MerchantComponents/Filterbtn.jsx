@@ -1,6 +1,8 @@
 import React from 'react';
+import { useRollId } from '../../common_components/RollIdContext'; // Import the useRollId hook
 
-const Filterbtn = ({ rollId }) => {
+const Filterbtn = () => {
+  const { rollId } = useRollId(); // Get rollId from context
   return (
     <div className="ms-4 mb-4 d-flex">
      

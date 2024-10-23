@@ -3,6 +3,7 @@ import Sidebar from '../common_components/Sidebar';
 import MainContent from './MerchantComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import RollIdPrompt from '../common_components/RollIdPrompt';
+import { RollIdProvider } from '../common_components/RollIdContext'; // Import the provider
 
 
 const Merchant = () => {
@@ -17,9 +18,11 @@ const Merchant = () => {
   };
 
   return (
+
+    <RollIdProvider> {/* Wrap everything inside the RollIdProvider */}
     <div className="container-fluid dashboard-layout m-0 p-0">
     
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId}/>
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
      
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
@@ -34,9 +37,10 @@ const Merchant = () => {
 
         <RollIdPrompt onRollIdSubmit={handleRollIdSubmit} />
 
-        <MainContent  rollId={rollId} />
+        <MainContent   />
       </div>
     </div>
+      </RollIdProvider>
   );
 };
 

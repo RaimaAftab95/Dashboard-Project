@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useRollId } from '../../common_components/RollIdContext';// Import the hook
 
-const Table = ({ rollId }) => {
+const Table = () => {
   const [showHGO1, setShowHGO1] = useState(false);
   const [showHGO2, setShowHGO2] = useState(false);
 
   const toggleHGO1 = () => setShowHGO1(!showHGO1);
   const toggleHGO2 = () => setShowHGO2(!showHGO2);
+ const { rollId } = useRollId(); // Get rollId from context
 
   return (
     <div>
