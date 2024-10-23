@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useRollId } from '../../common_components/RollIdContext';// Import the hook
 
-const Table = ({ rollId }) => {
+const Table = () => {
+  const { rollId } = useRollId(); // Use the context to get rollId
   const isMonazam = rollId === '1';
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
