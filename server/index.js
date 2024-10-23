@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2/promise');
 const { check, validationResult } = require('express-validator');
@@ -221,7 +222,6 @@ app.post('/api/signupmonazam', [
     res.status(500).json({ message: 'Server error during signup', error: error.message });
   }
 });
-
 //-----------------------login as both monazam and ----------------------------------------------------------------
 
 app.post('/api/login', async (req, res) => {
@@ -266,72 +266,204 @@ app.post('/api/login', async (req, res) => {
   }
 });
 //--------------------------signup as hgo---------------------------------------------------------
-// POST route for HGO signup
-app.post('/hgo/signup', async (req, res) => {
-  const { accountName, hgoname, enrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban } = req.body;
 
-  // Fetch Monazam data based on selected accountName
-  const monazamData = await db.query('SELECT id, email, enrollment FROM monazam WHERE accountName = ?', [accountName]);
+function generateEnrollment() {
+  let enrollment;
+  do {
+      enrollment = Math.floor(1000 + Math.random() * 9000); // 4 digits, not starting with 0
+  } while (enrollment.toString().startsWith('0'));
+  return enrollment.toString();
+}
+app.post('/signup-hgo', [
+  // Validate email
+  check('email').isEmail().withMessage('Enter a valid email address'),
+  check('newPassword').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
 
-  if (monazamData.length === 0) {
-      return res.status(400).send('Monazam not found');
+  // Validate accountName
+  check('accountName').notEmpty().withMessage('Account Name is required'),
+  check('hgoname').notEmpty().withMessage('hgo name is required'),
+  // Validate phone number with regex (accepts 10 to 15 digits with an optional leading "+")
+  check('phone').matches(/^[+]?[0-9]{10,15}$/).withMessage('Enter a valid phone number'),
+
+  // Validate focalPerson
+  check('focalPerson').notEmpty().withMessage('Focal person is required'),
+
+  // Validate PKR IBAN and Bank details
+  check('pkrIban').matches(/^[A-Za-z0-9]+$/).withMessage('Enter a valid PKR IBAN'),
+  check('pkrAccountTitle').notEmpty().withMessage('PKR Account Title is required'),
+  check('pkrBankName').notEmpty().withMessage('PKR Bank Name is required'),
+  check('pkrBranchName').notEmpty().withMessage('PKR Branch Name is required'),
+  check('pkrSwiftCode').notEmpty().withMessage('PKR Swift Code is required'),
+
+  // Validate FCY IBAN and Bank details
+  check('fcyIban').matches(/^[A-Za-z0-9]+$/).withMessage('Enter a valid FCY IBAN'),
+  check('fcyAccountTitle').notEmpty().withMessage('FCY Account Title is required'),
+  check('fcyBankName').notEmpty().withMessage('FCY Bank Name is required'),
+  check('fcyBranchName').notEmpty().withMessage('FCY Branch Name is required'),
+  check('fcySwiftCode').notEmpty().withMessage('FCY Swift Code is required'),
+  
+  // Validate E-Hajj IBAN
+  check('e_hajj_iban').matches(/^[A-Z]{2}\d{2}[A-Za-z0-9]{1,30}$/).withMessage('Enter a valid E-Hajj IBAN'),
+
+], async (req, res)=> {
+  const {
+      accountName, hgoname, email, phone, focalPerson, newPassword, 
+      pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, 
+      fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban
+  } = req.body;
+
+  try {
+      // Check if the company exists and fetch Monazam info
+      const [monazam] = await mysqlPool.query('SELECT m.id, m.email, c.enrollment_no FROM monazam m JOIN companies c ON c.id = c.id WHERE c.company_name = ?', [accountName]);
+
+      if (!monazam) {
+          return res.status(400).json({ message: 'No Monazam registered with this company.' });
+      }
+
+      // Hash the password before saving
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Generate a 4-digit unique enrollment number for HGO
+      const enrollment = generateEnrollment();
+
+      // Save data in temporary_hgo_signup table
+      const tempHGO = {
+          hgoname,
+          enrollment,
+          email,
+          phone,
+          focalPerson,
+          newPassword: hashedPassword,
+          pkrIban,
+          pkrAccountTitle,
+          pkrBankName,
+          pkrBranchName,
+          pkrSwiftCode,
+          fcyIban,
+          fcyAccountTitle,
+          fcyBankName,
+          fcyBranchName,
+          fcySwiftCode,
+          e_hajj_iban,
+          monazam_id: monazam.id,
+          monazam_email: monazam.email,
+          monazam_enrollment: monazam.enrollment_no,
+          status: 'pending',
+          role: 2
+      };
+
+      await mysqlPool.query('INSERT INTO temporary_hgo_signup SET ?', tempHGO);
+
+      // Send email to Monazam for approval
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL, 
+          pass: process.env.PASSWORD, 
+        },
+    });
+
+      const mailOptions = {
+        from:process.env.EMAIL,
+          to: monazam.email,
+          subject: 'New HGO Signup Request',
+          text: `A new HGO user (${hgoname}) has signed up under your company (${accountName}). Please approve or reject the request.`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.error('Error sending email:', error);
+              return res.status(500).json({ message: 'Error sending email to Monazam.' });
+          }
+          res.status(201).json({ message: 'Signup request sent to Monazam for approval.' });
+      });
+
+  } catch (err) {
+      console.error('Error during signup:', err);
+      res.status(500).json({ message: 'Internal server error' });
   }
-
-  const monazam_id = monazamData[0].id;
-  const monazam_email = monazamData[0].email;
-  const monazam_enrollment_no = monazamData[0].enrollment;
-
-  // Generate a unique HGO enrollment number
-  const hgoenrollment = generateUniqueEnrollment();
-
-  // Save data in the temporary table
-  await mysqlPool.query('INSERT INTO temporary_hgo_signup (accountName, monazam_id, monazam_email, monazam_enrollment, hgoname, enrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [accountName, monazam_id, monazam_email, monazam_enrollment_no, hgoname, enrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban]);
-
-  // Send email to Monazam with approve/reject buttons
-  sendApprovalEmail(monazam_email, hgoname, enrollment);
-
-  res.status(200).send('Signup data submitted. Awaiting Monazam approval.');
 });
+app.post('/approve-hgo', async (req, res) => {
+  const { hgoId, action } = req.body; // `hgoId` refers to the temporary_hgo_signup ID, and `action` is either 'approve' or 'reject'
 
-// Approve HGO signup
-app.get('/hgo/approve', async (req, res) => {
-  const { enrollment } = req.query;
+  try {
+      // Fetch HGO details from temporary_hgo_signup
+      const [hgo] = await mysqlPool.query('SELECT * FROM temporary_hgo_signup WHERE id = ?', [hgoId]);
 
-  // Fetch data from temporary table
-  const hgoData = await db.query('SELECT * FROM temporary_hgo_signup WHERE hgoenrollment = ?', [enrollment]);
+      if (!hgo) {
+          return res.status(404).json({ message: 'HGO signup request not found.' });
+      }
 
-  if (hgoData.length === 0) {
-      return res.status(404).send('No pending HGO signup found');
+      if (action === 'approve') {
+          // Move data to the hgo table
+          await db.query('INSERT INTO hgo SET ?', {
+              hgoname: hgo.hgoname,
+              enrollment: hgo.enrollment,
+              email: hgo.email,
+              phone: hgo.phone,
+              focalPerson: hgo.focalPerson,
+              newPassword: hgo.newPassword,
+              pkrIban: hgo.pkrIban,
+              pkrAccountTitle: hgo.pkrAccountTitle,
+              pkrBankName: hgo.pkrBankName,
+              pkrBranchName: hgo.pkrBranchName,
+              pkrSwiftCode: hgo.pkrSwiftCode,
+              fcyIban: hgo.fcyIban,
+              fcyAccountTitle: hgo.fcyAccountTitle,
+              fcyBankName: hgo.fcyBankName,
+              fcyBranchName: hgo.fcyBranchName,
+              fcySwiftCode: hgo.fcySwiftCode,
+              e_hajj_iban: hgo.e_hajj_iban,
+              monazam_id: hgo.monazam_id,
+              monazam_email: hgo.monazam_email,
+              monazam_enrollment: hgo.monazam_enrollment,
+              role: 2 // HGO role
+          });
+
+          // Delete from temporary_hgo_signup
+          await mysqlPool.query('DELETE FROM temporary_hgo_signup WHERE id = ?', [hgoId]);
+
+          res.json({ message: 'HGO approved and moved to main table.' });
+      } else if (action === 'reject') {
+          // Simply delete the entry from temporary_hgo_signup
+          await mysqlPool.query('DELETE FROM temporary_hgo_signup WHERE id = ?', [hgoId]);
+
+          // Send email to the HGO notifying rejection
+          const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL, 
+                pass: process.env.PASSWORD, 
+            },
+          });
+
+          const mailOptions = {
+            from: process.env.EMAIL,
+              to: hgo.email,
+              subject: 'HGO Signup Request Rejected',
+              text: `Your signup request for HGO (${hgo.hgoname}) has been rejected.`,
+          };
+
+          transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                  console.error('Error sending rejection email:', error);
+              }
+          });
+
+          res.json({ message: 'HGO signup request rejected and removed from temporary table.' });
+      }
+
+  } catch (err) {
+      console.error('Error during approval/rejection:', err);
+      res.status(500).json({ message: 'Internal server error' });
   }
-
-  const hgo = hgoData[0];
-
-  // Save approved HGO data in hgo_users table
-  await db.query('INSERT INTO hgo_users (monazam_id, accountName, hgoname, hgoenrollment, email, phone, focalPerson, newPassword, pkrIban, pkrAccountTitle, pkrBankName, pkrBranchName, pkrSwiftCode, fcyIban, fcyAccountTitle, fcyBankName, fcyBranchName, fcySwiftCode, e_hajj_iban) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [hgo.monazam_id, hgo.accountName, hgo.hgoname, hgo.hgoenrollment, hgo.email, hgo.phone, hgo.focalPerson, hgo.newPassword, hgo.pkrIban, hgo.pkrAccountTitle, hgo.pkrBankName, hgo.pkrBranchName, hgo.pkrSwiftCode, hgo.fcyIban, hgo.fcyAccountTitle, hgo.fcyBankName, hgo.fcyBranchName, hgo.fcySwiftCode, hgo.e_hajj_iban]);
-
-  // Delete from temporary table
-  await db.query('DELETE FROM temporary_hgo_signup WHERE hgoenrollment = ?', [enrollment]);
-
-  res.send('HGO approved successfully');
-});
-
-// Reject HGO signup
-app.get('/hgo/reject', async (req, res) => {
-  const { enrollment } = req.query;
-
-  // Delete from temporary table
-  await db.query('DELETE FROM temporary_hgo_signup WHERE hgoenrollment = ?', [enrollment]);
-
-  res.send('HGO signup rejected');
 });
 
 //-----------------------api for incoming_request----------------------------------------------
 
 // POST API to save form data
 app.post('/api/incomingrequest', async (req, res) => {
-  const { date, narration, currency, amount } = req.body;
+  const { date, narration, currency, amount ,} = req.body;
 
   if (narration.length > 250) {
     return res.status(400).json({ error: 'Narration exceeds 250 words' });
@@ -363,7 +495,9 @@ app.get('/api/incomingrequest', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error fetching data', error });
   }
+  
 });
+
 // DELETE API to delete a record by ID
 app.delete('/api/incomingrequest/:id', async (req, res) => {
   const { id } = req.params;
@@ -406,21 +540,27 @@ app.post('/api/outgoingrequest', async (req, res) => {
 
   if (narration.length > 250) {
     return res.status(400).json({ error: 'Narration exceeds 250 words' });
-}
-if (!date || !narration || !currency || !type || !amount) {
-  console.log('Validation failed: Missing required fields');
-  return res.status(400).json({ error: 'All fields are required' });
-}
-const query = `INSERT INTO \`outgoing_request\` (date, narration, currency, type, amount) VALUES (?, ?, ?, ?, ?)`;
-  
+  }
+
+  if (!date || !narration || !currency || !type || !amount) {
+    console.log('Validation failed: Missing required fields');
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  // Convert the date to 'YYYY-MM-DD' format
+  const formattedDate = new Date(date).toISOString().slice(0, 10);
+
+  const query = `INSERT INTO \`outgoing_request\` (date, narration, currency, type, amount) VALUES (?, ?, ?, ?, ?)`;
+
   try {
-    const [results] = await mysqlPool.query(query, [date, narration, currency, type, amount]);
+    const [results] = await mysqlPool.query(query, [formattedDate, narration, currency, type, amount]);
     res.status(200).json({ message: 'Data saved successfully!', results });
   } catch (error) {
     console.error('Error saving data:', error.message);
     res.status(500).json({ message: 'Error saving data', error: error.message });
   }
 });
+
 // GET API to fetch data from the database
 app.get('/api/outgoingrequest', async (req, res) => {
   const limit = parseInt(req.query.limit) || 7; // Default to 7 records
@@ -472,25 +612,35 @@ app.get('/api/outgoingrequest/count', async (req, res) => {
 
 //-----------------------api for merchant_request----------------------------------------------
 app.post('/api/merchantrequest', async (req, res) => {
-  const { date, narration, currency, voucherid, amount } = req.body;
+  const { date, narration, voucherid, amount } = req.body;
 
+  // Check if narration exceeds 250 characters
   if (narration.length > 250) {
     return res.status(400).json({ error: 'Narration exceeds 250 words' });
-}
-if (!date || !narration || !currency || !voucherid || !amount) {
-  console.log('Validation failed: Missing required fields');
-  return res.status(400).json({ error: 'All fields are required' });
-}
-const query = `INSERT INTO \`merchant_request\` (date, narration, currency, voucherid, amount) VALUES (?, ?, ?, ?, ?)`;
-  
+  }
+
+  // Check for required fields
+  if (!date || !narration || !voucherid || !amount) {
+    console.log('Validation failed: Missing required fields');
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  // Convert the date to 'YYYY-MM-DD' format
+  const formattedDate = new Date(date).toISOString().slice(0, 10);
+
+  // SQL query to insert data
+  const query = `INSERT INTO \`merchant_request\` (date, narration, voucherid, amount) VALUES (?, ?, ?, ?)`;
+
   try {
-    const [results] = await mysqlPool.query(query, [date, narration, currency, voucherid, amount]);
+    // Execute the query
+    const [results] = await mysqlPool.query(query, [formattedDate, narration, voucherid, amount]);
     res.status(200).json({ message: 'Data saved successfully!', results });
   } catch (error) {
     console.error('Error saving data:', error.message);
     res.status(500).json({ message: 'Error saving data', error: error.message });
   }
 });
+
 // GET API to fetch data from the database
 app.get('/api/merchantrequest', async (req, res) => {
   const limit = parseInt(req.query.limit) || 7; // Default to 7 records

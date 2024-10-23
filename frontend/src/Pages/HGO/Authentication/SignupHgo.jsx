@@ -5,7 +5,6 @@ import {FaEye, FaEyeSlash} from 'react-icons/fa';
 const Signup = () => {
   const [accountName, setAccountName] = useState('');
   const [hgoname, setHgoName] = useState('');
-  const [hgoenrollment, setEnrollment] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [focalPerson, setFocalPerson] = useState('');
@@ -48,7 +47,6 @@ const Signup = () => {
     const signupData = {
       accountName,
       hgoname,
-      hgoenrollment,
       email,
       phone,
       focalPerson,
@@ -123,16 +121,7 @@ const Signup = () => {
             />
           </div>
 
-  <div className="form-group mb-3">
-            <label className='label-text'>Enrolment Number</label>
-            <input
-              type="text"
-              className="form-control input-style"
-              placeholder="For Ex:0000"
-              value={hgoenrollment}
-              onChange={(e) => setEnrollment(e.target.value)}
-            />
-          </div>
+
           <div className="form-group mb-3 d-flex justify-content-between">
             <div className="w-50 me-2">
               <label className='label-text'>Email</label>

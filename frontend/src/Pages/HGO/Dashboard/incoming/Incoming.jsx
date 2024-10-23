@@ -6,19 +6,18 @@ import RollIdPrompt from '../common_components/RollIdPrompt';
 
 const IncomingDashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [rollId, setRollId] = useState(''); 
+  const [rollId, setRollId] = useState('1'); // This stores the role id (1 or 2)
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
   const handleRollIdSubmit = (id) => {
-    setRollId(id); 
+    setRollId(id); // Set the role id when it's submitted from RollIdPrompt
   };
 
   return (
     <div className="container-fluid dashboard-layout m-0 p-0">
-   
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} rollId={rollId} /> 
 
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
@@ -31,8 +30,10 @@ const IncomingDashboard = () => {
           <img src="/assets/logo.png" alt="Logo" className="img-fluid logo pe-5" style={{ height: '40px' }} />
         </div>
 
+        {/* Prompt the user to select role */}
         <RollIdPrompt onRollIdSubmit={handleRollIdSubmit} />
 
+        {/* Main content shows based on the role id */}
         <MainContent rollId={rollId} />
       </div>
     </div>

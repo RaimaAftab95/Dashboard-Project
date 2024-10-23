@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const IncomingRequest = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     date: '',
     narration: '',
     currency: '',
     amount: ''
-  });
+  };
+  const [formData, setFormData] = useState(initialFormData); // Initialize form data state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +40,8 @@ const IncomingRequest = ({ isOpen, onClose }) => {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Data saved successfully!');
+        alert('Request Generated');
+        setFormData(initialFormData); // Reset form data after successful submission
         onClose(); 
       } else {
         alert(data.message || 'Failed to save data');
