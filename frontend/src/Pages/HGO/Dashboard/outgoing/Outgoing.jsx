@@ -3,6 +3,7 @@ import OutgoingSidebar from '../common_components/OutgoingSidebar';
 import MainContent from './OutgoingingComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import RollIdPrompt from '../common_components/RollIdPrompt';
+import { RollIdProvider } from '../common_components/RollIdContext'; // Import the provider
 
 const OutgoingDashboard = () => {  
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -18,12 +19,13 @@ const OutgoingDashboard = () => {
   
 
   return (
+     <RollIdProvider> {/* Wrap everything inside the RollIdProvider */}
     <div className="container-fluid dashboard-layout m-0 p-0">
      
       <OutgoingSidebar 
         isOpen={isSidebarOpen} 
         toggleSidebar={toggleSidebar} 
-        rollId={rollId} 
+         
       />
 
       <div className={`main-content ${isSidebarOpen ? 'blurred' : ''}`}>
@@ -38,9 +40,10 @@ const OutgoingDashboard = () => {
 
         <RollIdPrompt onRollIdSubmit={handleRollIdSubmit} />
 
-        <MainContent rollId={rollId} />
+        <MainContent  />
       </div>
     </div>
+     </RollIdProvider>
   );
 };
 

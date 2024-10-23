@@ -7,6 +7,7 @@ import RequestButtons from './RequestButtons';
 import { useRollId } from './RollIdContext'; // Import the hook
 
 const Sidebar = ({ isOpen, toggleSidebar }) => { 
+  
   const { rollId } = useRollId(); // Use the context to get rollId
   const [isIncomingModalOpen, setIncomingModalOpen] = useState(false);
   const [isOutgoingModalOpen, setOutgoingModalOpen] = useState(false);

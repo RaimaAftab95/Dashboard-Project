@@ -5,8 +5,11 @@ import OutgoingRequest from './OutgoingRequest';
 import MerchantRequest from './MerchantRequest';
 import RequestButtons from './RequestButtons';
 import MonazamSidebarBtns from './MonazamSidebarBtns';
+import { useRollId } from './RollIdContext'; // Import the hook
 
-const OutgoingSidebar = ({ isOpen, toggleSidebar, rollId }) => {
+const OutgoingSidebar = ({ isOpen, toggleSidebar }) => {
+
+  const { rollId } = useRollId(); // Use the context to get rollId
   const [isIncomingModalOpen, setIncomingModalOpen] = useState(false);
   const [isOutgoingModalOpen, setOutgoingModalOpen] = useState(false);
   const [isMerchantModalOpen, setMerchantModalOpen] = useState(false);
