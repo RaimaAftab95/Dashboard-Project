@@ -65,31 +65,26 @@
 
 import { useEffect} from 'react';
 import { useRollId } from './RollIdContext';
+import { useParams } from 'react-router-dom';
 
-let hasPrompted = false; // Static variable to track prompt state across renders
 
 const RollIdPrompt = () => {
     const { rollId, setRollId } = useRollId();
+    const { userType} = useParams();
 
     useEffect(() => {
         console.log('RollIdPrompt useEffect triggered'); // Log when useEffect runs
 
-        if (!rollId && !hasPrompted) {
-            console.log('Showing prompt for Roll ID'); // Log before showing the prompt
-            hasPrompted = true; // Set the static variable
-            const input = prompt('Please enter your Roll ID:');
-            if (input) {
-                console.log(`Roll ID entered: ${input}`); // Log the input received
-                setRollId(input);
-            } else {
-                console.log('No Roll ID entered'); // Log if no input was provided
-            }
+        if (userType) {
+
+                setRollId(userType === "monazam" ? "1" : "hgo" );
+        
         } else {
             console.log(`Roll ID already set: ${rollId}`); // Log if rollId is already set
         }
-    }, [rollId, setRollId]);
+    }, [userType]);
 
-    return null; // No UI to render
+    return null; 
 };
 
 export default RollIdPrompt;

@@ -368,13 +368,11 @@ app.post("/api/login", async (req, res) => {
     const user = rows[0];
 
     if (!user) {
-      return res.status(400).json({ message: "User not found" });
+      return res.status(400).json({ success: false, message: "Wrong enrollment number" });
     }
 
-    console.log("Retrieved user:", user);
-
     if (!user.password) {
-      return res.status(500).json({ message: "User has no password set" });
+      return res.status(500).json({ success: false, message: "User has no password set" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -382,7 +380,7 @@ app.post("/api/login", async (req, res) => {
     console.log("Password match:", isPasswordValid);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ success: false, message: "Wrong password" });
     }
     // If login is successful, respond with user details and user type
     req.session.user = {
@@ -392,8 +390,16 @@ app.post("/api/login", async (req, res) => {
       enrollment: user.enrollment,
       user_Type: user.user_type,
     };
+    res.status(200).json({
+      success: true, // Include success flag
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      enrollment: user.enrollment,
+      user_type: user.user_type, // Ensure to send user_type as per the frontend requirement
+    });
+   
     // Respond with success message
-    res.status(200).json({ message: "Login successful" });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Server error" });

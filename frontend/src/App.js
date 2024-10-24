@@ -27,12 +27,12 @@ function App() {
             <Route path="/signupmonazam" element={<SignupMonazam />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/resetpassword1" element={<ResetPassword1 />} />
-          <Route path="/incoming" element={<IncomingDashboard />} />
-          <Route path="/outgoing" element={<OutgoingDashboard />} />
-          <Route path="/merchant" element={<MerchantDashboard />} />
-          <Route path="/monazamaccount" element={<MonazamAccountDashboard/>} />
-          <Route path="/opap" element={<OpapDashboard/>} />
-          <Route path="/ehajj" element={<EhajjDashboard/>} />
+          <Route path="/incoming/:userType" element={<IncomingDashboard />} />
+          <Route path="/outgoing/:userType" element={<OutgoingDashboard />} />
+          <Route path="/merchant/:userType" element={<MerchantDashboard />} />
+          <Route path="/monazamaccount/:userType" element={<MonazamAccountDashboard/>} />
+          <Route path="/opap/:userType" element={<OpapDashboard/>} />
+          <Route path="/ehajj/:userType" element={<EhajjDashboard/>} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
