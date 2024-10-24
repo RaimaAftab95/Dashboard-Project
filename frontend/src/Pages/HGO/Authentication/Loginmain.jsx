@@ -1,42 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { FaArrowRight, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom'; 
 
 const Loginmain = () => {
-  const [email, setEmail] = useState('');
+  const [enrollment, setEnrollment] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [userType, setUserType] = useState('monazam'); // Default user type
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Use useNavigate to navigate after login
+  
+  // Check if the user is already logged in
+  useEffect(() => {
+    const user_Type = localStorage.getItem('user_Type');
+    if (user_Type) {
+      // Redirect based on user_Type
+      if (user_Type === 'Monazam') {
+        navigate('/incoming'); // Monazam Dashboard
+      } else if (user_Type === 'HGO') {
+        navigate('/incoming'); // HGO Dashboard
+      }
+    }
+  }, [navigate]);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    
+    setError('');
     // Make an API call to your backend login API
     fetch('http://localhost:3000/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ enrollmentNumber: email, password, userType })
+      body: JSON.stringify({ enrollment, password })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.token) {
-        // Store token and role_id in localStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('role_id', data.role_id);
-        
-        // Redirect to the /incoming page
-        navigate('/incoming');
-      } else {
-        // Handle error message
-        setError(data.message || 'Login failed');
-      }
-    })
-    .catch(error => {
-      console.error('Error during login:', error);
-      setError('Server error during login');
-    });
+      .then(res => res.json())
+      .then(data => {
+
+        if (data.success && data.id && data.user_Type) {         
+          localStorage.setItem('id', data.id);
+          localStorage.setItem('email', data.email);
+          localStorage.setItem('name', data.name);
+          localStorage.setItem('enrollment', data.enrollment);
+          localStorage.setItem('user_Type', data.user_Type);
+
+          // Redirect based on userType (Monazam or HGO)
+          if (data.user_Type === 'Monazam') {
+            navigate('/incoming'); 
+            console.log( data.user) // Monazam Dashboard
+          } else if (data.user_Type === 'HGO') {
+            navigate('/incoming');  // HGO Dashboard
+          }
+        } else {
+          // Handle error message
+          setError(data.message || 'Login failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error during login:', error);
+        setError('Server error during login');
+      });
   };
 
   return (
@@ -50,27 +70,15 @@ const Loginmain = () => {
           />
         </div>
         <form onSubmit={handleLogin}>
-          {/* User Type Selection */}
-          <div className="form-group mb-3">
-            <label className='label-text'>User Type</label>
-            <select 
-              className="form-control input-style"
-              value={userType}
-              onChange={(e) => setUserType(e.target.value)}
-            >
-              <option value="monazam">Monazam</option>
-              <option value="hgo">HGO</option>
-            </select>
-          </div>
-
+        
           <div className="form-group mb-3">
             <label className='label-text'>Enrollment Number</label>
             <input
               type="number"
               className="form-control input-style"
-              placeholder="02345643432"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="0234"
+              value={enrollment}
+              onChange={(e) => setEnrollment(e.target.value)}
             />
           </div>
 
@@ -93,7 +101,6 @@ const Loginmain = () => {
 
           {/* Show error message if login fails */}
           {error && <div className="alert alert-danger">{error}</div>}
-
           <div className="mb-3 text-center">
             <span className='label-text'>Forget Password? </span>
             <a href="/resetpassword" className="text-decoration-none lightgreen-txt">

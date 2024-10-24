@@ -1,0 +1,5 @@
+CREATE TABLE companies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    company_name VARCHAR(255) UNIQUE NOT NULL,
+    enrollment VARCHAR(255) UNIQUE NOT NULL
+);

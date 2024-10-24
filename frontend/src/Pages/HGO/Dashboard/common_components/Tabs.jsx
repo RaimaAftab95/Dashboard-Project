@@ -72,6 +72,14 @@ const Tabs = () => {
             Merchant
           </a>
         </li>
+        <li className="nav-item">
+          <button
+            className="nav-link tab-link  "
+            href="/logout"
+          >
+            Logout
+          </button>
+        </li>
       </ul>
       <FaBell size={20} className="ms-3 bell-icon" onClick={handleBellClick} style={{ cursor: 'pointer' }} />
 
