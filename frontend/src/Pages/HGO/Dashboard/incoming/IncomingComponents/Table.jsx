@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRollId } from '../../common_components/RollIdContext';// Import the hook
+import axios from 'axios';
 
 const Table = () => {
   const { rollId } = useRollId(); // Use the context to get rollId
@@ -9,29 +10,25 @@ const Table = () => {
   const [error, setError] = useState(null);
 
   // Fetch incoming requests
-  useEffect(() => {
-    const fetchRequests = async () => {
+    const fetchRequests =  async (limit = 7, offset = 0) => {
       try {
-        const response = await fetch('http://localhost:3000/api/incomingrequest?limit=7&offset=0'); // Adjust limit and offset as needed
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setRequests(data); // Set the fetched data into state
+        const response = await axios.get(`http://localhost:3000/api/incomingrequest?limit=${limit}&offset=${offset}`); // Adjust limit and offset as needed
+        setRequests(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setError(error.message); // Set error message if any error occurs
+        setError('Error fetching data');
+        console.error(error);
       } finally {
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false);
       }
     };
 
-    fetchRequests();
-  }, []); // Empty dependency array means this effect runs once on mount
-
-  if (loading) return <div>Loading...</div>; // Show loading message
-  if (error) return <div>Error: {error}</div>; // Show error message
-
+    useEffect(() => {
+      fetchRequests();
+    }, []);
+  
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+   
   return (
     <div className="table-responsive">
       <table className="table">

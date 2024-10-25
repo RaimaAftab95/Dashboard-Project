@@ -390,7 +390,9 @@ app.post("/api/login", async (req, res) => {
       email: user.email,
       enrollment: user.enrollment,
       user_Type: user.user_type,
+
     };
+    console.log("session", req.session)
     res.status(200).json({
       success: true, // Include success flag
       id: user.id,
@@ -657,51 +659,78 @@ app.post("/approve-hgo", async (req, res) => {
 const router = express.Router();
 
 const authenticateUser = (req, res, next) => {
-  const loggedInUser = req.session.user; // Assuming session middleware stores user data in req.session
+  const loggedInUser = req.session.user;
+  console.log("session",req.session)
+  console.log("Logged in user:", loggedInUser); // Debugging line
   if (!loggedInUser || loggedInUser.user_type !== 'HGO') {
     return res.status(401).json({ message: 'Unauthorized or invalid user type' });
   }
   req.user = loggedInUser;
+  
   next();
 };
-// POST API to save form data
-router.post('/api/incomingrequest', authenticateUser, async (req, res) => {
+app.post("/api/incomingrequest", async (req, res) => {
   const { date, narration, currency, amount } = req.body;
-  const hgoUser = req.user;
 
-
-  // Check for required form data fields
-  if (!date || !narration || !currency || !amount) {
-    return res.status(400).json({ message: 'All fields are required.' });
+  if (narration.length > 250) {
+    return res.status(400).json({ error: "Narration exceeds 250 words" });
   }
-console.log("hgouser", req.user);
+  if (!date || !narration || !currency || !amount) {
+    console.log("Validation failed: Missing required fields");
+    return res.status(400).json({ error: "All fields are required" });
+  }
+  const formattedDate = new Date(date).toISOString().slice(0, 10);
+
+  const sql =
+    "INSERT INTO incoming (date, narration, currency, amount) VALUES (?, ?, ?, ?)";
+
   try {
-    // Get monazam_id for the HGO user
-    const [result] = await mysqlPool.query(
-      'SELECT monazam_id FROM users WHERE id = ? AND user_type = "HGO"',
-      [hgoUser.id]
-      
-    );
-    console.log("hgouser", req.user);
-    const monazam_id = result[0]?.monazam_id;
-
-    if (!monazam_id) {
-      return res.status(400).json({ message: 'HGO does not have a valid Monazam parent.' });
-    }
-
-    // Insert the incoming request with additional fields
-    const status = 'pending'; // Set default status
-    await mysqlPool.query(
-      'INSERT INTO incoming_requests (date, narration, amount, currency, hgo_id, monazam_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [date, narration, amount, currency, hgoUser.id, monazam_id, status]
-    );
-
-    res.status(200).json({ message: 'Incoming request submitted successfully.' });
+    const [results] = await mysqlPool.query(sql, [
+      date,
+      narration,
+      currency,
+      amount,
+    ]);
+    res.status(200).json({ message: "Data saved successfully!", results });
   } catch (error) {
-    console.error('Error saving request:', error);
-    res.status(500).json({ message: 'Failed to save request.' });
+    console.error("Error saving data:", error.message);
+    res
+      .status(500)
+      .json({ message: "Error saving data", error: error.message });
   }
 });
+// POST API to save form data
+// app.post('/api/incomingrequest', async (req, res) => {
+//    console.log("Incoming request body:", req.body); 
+//   const { date, narration, currency, amount } = req.body;
+//   const hgoUser = req.user;
+
+//   if (!date || !narration || !currency || !amount) {
+//     return res.status(400).json({ message: 'All fields are required.' });
+//   }
+//   try {  
+//     const [result] = await mysqlPool.query(
+//       'SELECT monazam_id FROM users WHERE id = ? AND user_type = "HGO"',
+//       [hgoUser.id]
+//     );
+//     console.log("Monazam ID query result:", result); ;
+
+//     const monazam_id = result[0]?.monazam_id;
+
+//     if (!monazam_id) {
+//       return res.status(400).json({ message: 'HGO does not have a valid Monazam parent.' });
+//     }
+//     const status = 'pending'; 
+//     await mysqlPool.query(
+//       'INSERT INTO incoming_requests (date, narration, amount, currency, hgo_id, monazam_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+//       [date, narration, amount, currency, hgoUser.id, monazam_id, status]
+//     );
+//     res.status(200).json({ message: 'Incoming request submitted successfully.' });
+//   } catch (error) {
+//     console.error('Error saving request:', error);
+//     res.status(500).json({ message: 'Failed to save request.' });
+//   }
+// });
 app.post("/api/reviewrequest/:requestId", async (req, res) => {
   const { requestId } = req.params;
   const { action } = req.body; // 'approve' or 'reject'
@@ -737,19 +766,16 @@ app.post("/api/reviewrequest/:requestId", async (req, res) => {
 
   res.status(200).json({ message: `Request ${newStatus} successfully!` });
 });
-app.get("/api/hgo/requests", async (req, res) => {
-  const hgoId = req.user.id; // Assuming HGO user ID is stored in req.user after login
+app.get("/api/incomingrequest", async (req, res) => {
+  const limit = parseInt(req.query.limit) || 7; // Default to 7 records
+  const offset = parseInt(req.query.offset) || 0; // Default to the first page
 
-  if (req.user.user_type !== 'HGO') {
-    return res.status(403).json({ message: "Only HGO users can view their requests." });
-  }
-
+  const sql = "SELECT * FROM `incoming` LIMIT ? OFFSET ?";
   try {
-    const sql = "SELECT * FROM incoming_request WHERE hgo_id = ?";
-    const [requests] = await mysqlPool.query(sql, [hgoId]);
-    res.status(200).json(requests);
+    const [results] = await mysqlPool.query(sql, [limit, offset]);
+    res.status(200).json(results);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching requests", error: error.message });
+    res.status(500).json({ message: "Error fetching data", error });
   }
 });
 

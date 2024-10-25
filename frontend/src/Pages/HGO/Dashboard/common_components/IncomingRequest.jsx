@@ -1,16 +1,16 @@
-import React, { useState,useEffect} from 'react';
+import React, { useState} from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const IncomingRequest = ({ isOpen, onClose }) => {
-  const initialFormData = {
+  const [formData, setFormData] = useState({
     date: '',
     narration: '',
+    amount: '',
     currency: '',
-    amount: ''
-  };
+  });
 
-  const [formData, setFormData] = useState(initialFormData); // Initialize form data state
-  const [loading, setLoading] = useState(false);
+  // State to store error or success messages
+  const [message, setMessage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,46 +20,41 @@ const IncomingRequest = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
- if (loading) return; // Prevent multiple submissions
-    setLoading(true);
+  // Handle form submission
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const { date, narration, currency, amount } = formData;
+  const { date, narration, currency,type, amount } = formData;
 
- 
-    if (!date || !narration || !currency || !amount) {
-      alert('All fields are required.');
-      setLoading(false);
-      return;
+
+  if (!date || !narration || !currency|| !amount) {
+    alert('All fields are required.');
+    return;
+  }
+  try {
+    const response = await fetch('http://localhost:3000/api/incomingrequest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    console.log(formData); // Check the 'type' value being sent
+
+    const data = await response.json();
+    if (response.ok) {
+      alert('Data saved successfully!');
+      onClose(); 
+    } else {
+      alert(data.message || 'Failed to save data');
     }
-  console.log(formData);
-    try {
-      const response = await fetch('http://localhost:3000/api/incomingrequest', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      const data = await response.json();
-      console.log(data);
-      if (response.ok) {
-        alert('Request Generated');
-        setFormData(initialFormData); // Reset form data after successful submission
-        onClose(); 
-      } else {
-        alert(data.message || 'Failed to save data');
-      }
-    } catch (error) {
-      console.error('Error submitting data:', error);
-      alert('Failed to submit data');
-    } finally {
-      setLoading(false); // Reset loading state
-    }
-  };
-  if (!isOpen) return null;
+  } catch (error) {
+    console.error('Error submitting data:', error);
+    alert('Failed to submit data');
+  }
+};
+
+if (!isOpen) return null;
 
   return (
     <div className="modal d-block modal-blur-bg">
@@ -128,11 +123,17 @@ const IncomingRequest = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-           <div className="modal-footer justify-content-center">
-            <button className="btn w-50 modal-label-txt modal-btn-bg" onClick={handleSubmit} disabled={loading}>
-              {loading ? 'Submitting...' : 'Submit'}
+          <div className="modal-footer justify-content-center">
+            <button className="btn w-50 modal-label-txt modal-btn-bg" onClick={handleSubmit}>
+              Submit
             </button>
           </div>
+
+          {message && (
+            <div className={`alert mt-3 ${message.type === 'success' ? 'alert-success' : 'alert-danger'}`}>
+              {message.text}
+            </div>
+          )}
         </div>
       </div>
     </div>

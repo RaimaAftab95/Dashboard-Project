@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+
 
 const Signuphgo = () => {
   const [accountName, setAccountName] = useState('');
@@ -47,7 +51,7 @@ const Signuphgo = () => {
     fcySwiftCode: '',
     e_hajj_iban: '',
   });
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
@@ -63,6 +67,7 @@ const Signuphgo = () => {
 
   const validateFields = () => {
     const errors = {};
+    
     if (!accountName) errors.accountName = 'Account Name is required.';
     if (!email || !emailRegex.test(email)) errors.email = 'Please enter a valid email address.';
     if (!phone) errors.phone = 'Phone number is required.';
@@ -124,11 +129,13 @@ const Signuphgo = () => {
 
     try {
       // Call signup API first
-      const signupResponse = await axios.post('http://localhost:3000/api/signup-hgo', signupData);
+      const signupResponse = await axios.post('http://localhost:3000/signup-hgo', signupData);
       console.log('Signup successful:', signupResponse.data);
+      setSuccessMessage('Signup successful! Your account is waiting for approval.');
 
+   setTimeout(() => navigate('/'), 2000);
       // Call approve API after successful signup
-      const approveResponse = await axios.post('http://localhost:3000/api/approve-hgo', {
+      const approveResponse = await axios.post('http://localhost:3000/approve-hgo', {
         hgo_id: signupResponse.data.hgo_id // Use the ID returned from the signup response
       });
 
@@ -144,7 +151,7 @@ const Signuphgo = () => {
       setPassword("");
       setPkrIban("");
       setPkrAccountTitle("");
-      setPkrBankName("");
+      setPkrBankName(""); 
       setPkrBranchName("");
       setPkrSwiftCode("");
       setFcyIban("");

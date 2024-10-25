@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
 
-const MerchantRequest = ({ isOpen, onClose, onRequestSuccess  }) => {
-  const initialFormData = {
+
+const MerchantRequest = ({ isOpen, onClose }) => {
+  // State to store form data
+  const [formData, setFormData] = useState({
     date: '',
     narration: '',
     voucherid: '',
     amount: ''
-  };
+  });
 
-  const [formData, setFormData] = useState(initialFormData); // Initialize form data state
+  // State to store error or success messages
+  const [message, setMessage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,6 +21,7 @@ const MerchantRequest = ({ isOpen, onClose, onRequestSuccess  }) => {
       [name]: value,
     }));
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +32,6 @@ const MerchantRequest = ({ isOpen, onClose, onRequestSuccess  }) => {
       alert('All fields are required.');
       return;
     }
-
     try {
       const response = await fetch('http://localhost:3000/api/merchantrequest', {
         method: 'POST',
@@ -38,13 +40,12 @@ const MerchantRequest = ({ isOpen, onClose, onRequestSuccess  }) => {
         },
         body: JSON.stringify(formData),
       });
+      console.log(formData); // Check the 'type' value being sent
 
       const data = await response.json();
       if (response.ok) {
-        alert('Request Generated');
-        onRequestSuccess(data);
-        setFormData(initialFormData); // Reset form data after successful submission
-        onClose();
+        alert('Data saved successfully!');
+        onClose(); 
       } else {
         alert(data.message || 'Failed to save data');
       }
@@ -125,6 +126,12 @@ const MerchantRequest = ({ isOpen, onClose, onRequestSuccess  }) => {
               Submit
             </button>
           </div>
+
+          {message && (
+            <div className={`alert mt-3 ${message.type === 'success' ? 'alert-success' : 'alert-danger'}`}>
+              {message.text}
+            </div>
+          )}
         </div>
       </div>
     </div>
