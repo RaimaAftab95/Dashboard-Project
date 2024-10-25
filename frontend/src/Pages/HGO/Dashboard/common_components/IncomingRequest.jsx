@@ -8,7 +8,10 @@ const IncomingRequest = ({ isOpen, onClose }) => {
     currency: '',
     amount: ''
   };
+  
   const [formData, setFormData] = useState(initialFormData); // Initialize form data state
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
+  const [message, setMessage] = useState(''); // Message for success or failure feedback
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,12 +23,14 @@ const IncomingRequest = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setMessage(''); // Clear previous messages
 
     const { date, narration, currency, amount } = formData;
 
- 
     if (!date || !narration || !currency || !amount) {
       alert('All fields are required.');
+      setIsSubmitting(false);
       return;
     }
 
@@ -40,15 +45,17 @@ const IncomingRequest = ({ isOpen, onClose }) => {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Request Generated');
+        setMessage('Request Generated Successfully');
         setFormData(initialFormData); // Reset form data after successful submission
-        onClose(); 
+        onClose();
       } else {
-        alert(data.message || 'Failed to save data');
+        setMessage(data.message || 'Failed to save data');
       }
     } catch (error) {
       console.error('Error submitting data:', error);
-      alert('Failed to submit data');
+      setMessage('Failed to submit data');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -70,6 +77,8 @@ const IncomingRequest = ({ isOpen, onClose }) => {
           </div>
 
           <div className="modal-body">
+            {message && <div className="alert alert-info">{message}</div>}
+            
             <div className="row mb-3">
               <div className="col-12 col-md-6">
                 <label className="modal-label-txt">Date</label>
@@ -122,8 +131,12 @@ const IncomingRequest = ({ isOpen, onClose }) => {
           </div>
 
           <div className="modal-footer justify-content-center">
-            <button className="btn w-50 modal-label-txt modal-btn-bg" onClick={handleSubmit}>
-              Submit
+            <button
+              className="btn w-50 modal-label-txt modal-btn-bg"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </div>

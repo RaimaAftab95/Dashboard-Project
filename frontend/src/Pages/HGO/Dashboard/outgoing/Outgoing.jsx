@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import OutgoingSidebar from '../common_components/OutgoingSidebar'; 
 import MainContent from './OutgoingingComponents/MainContent';
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -6,6 +9,9 @@ import RollIdPrompt from '../common_components/RollIdPrompt';
 import { RollIdProvider } from '../common_components/RollIdContext'; // Import the provider
 
 const OutgoingDashboard = () => {  
+  const navigate = useNavigate();
+  const { userType } = useParams(); // Get the user type from the URL
+  console.log("User Type:", userType);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
    const [rollId, setRollId] = useState(''); 
 
@@ -17,7 +23,12 @@ const OutgoingDashboard = () => {
     setRollId(id);
   };
   
-
+  useEffect(() => {
+    if (!userType || (userType !== 'hgo' && userType !== 'monazam')) {
+      // Redirect to an error page or a default page if the userType is invalid
+      navigate('/');
+    }
+  }, [userType, navigate]);
   return (
      <RollIdProvider> {/* Wrap everything inside the RollIdProvider */}
     <div className="container-fluid dashboard-layout m-0 p-0">
