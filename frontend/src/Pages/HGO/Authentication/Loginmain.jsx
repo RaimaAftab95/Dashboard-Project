@@ -74,7 +74,8 @@ const Loginmain = () => {
         localStorage.setItem('name', data.name);
         localStorage.setItem('enrollment', data.enrollment);
         localStorage.setItem('user_Type', data.user_type);
-    
+      localStorage.setItem('authToken', data.token);
+      console.log(data.token)
         // Redirect based on userType
         navigate(`/incoming/${data.user_type.toLowerCase()}`);
       } else {

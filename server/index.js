@@ -1,5 +1,5 @@
 const express = require("express");
-const passport = require('./config/passportConfig');
+// const mysqlPool = require('./config/database');
 const cors = require("cors");
 const morgan = require("morgan");
 const bcrypt = require("bcrypt");
@@ -7,6 +7,7 @@ const session = require("express-session");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2/promise");
+const authenticateToken= require('./Middleware/Authentication/authenticateToken')
 const { check, validationResult } = require("express-validator");
 const app = express();
 app.use(cors());
@@ -15,7 +16,6 @@ app.use(morgan("dev"));
 require("dotenv").config();
 app.use(bodyParser.json());
 
-const authenticateToken = require('./Middleware/Authentication/authenticateToken'); 
 const mysqlPool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -34,8 +34,6 @@ const mysqlPool = mysql.createPool({
     connection.release();
   } catch (err) {
     console.error("Error connecting to MySQL:", err.message);
-    return res.status(500).json({ status: 'error', message: "Internal server error while connecting to the database." });
-
   }
 })();
 // jwtSecret
@@ -51,20 +49,7 @@ app.use(
     cookie: { secure: false },
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.post('/', passport.authenticate('local', {
-  successRedirect: '/icoming/:userType',
-  failureRedirect: '/',
-  failureFlash: true
-}));
-app.get('/icoming/:userType', (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect('/login');
-  }
-  res.send(`Hello ${req.user.name}, you are logged in!`);
-});
 //-----------------------api for company name--------------------------------------------------
 
 app.post("/api/company", async (req, res) => {
@@ -669,76 +654,54 @@ app.post("/approve-hgo", async (req, res) => {
 });
 
 //-----------------------api for incoming_request----------------------------------------------
+const router = express.Router();
 
+const authenticateUser = (req, res, next) => {
+  const loggedInUser = req.session.user; // Assuming session middleware stores user data in req.session
+  if (!loggedInUser || loggedInUser.user_type !== 'HGO') {
+    return res.status(401).json({ message: 'Unauthorized or invalid user type' });
+  }
+  req.user = loggedInUser;
+  next();
+};
 // POST API to save form data
-app.post('/api/incomingrequest', authenticateToken, async (req, res) => {
-    console.log('Incoming request body:', req.body);
+router.post('/api/incomingrequest', authenticateUser, async (req, res) => {
   const { date, narration, currency, amount } = req.body;
-  const hgoId = req.user.id; // Assuming HGO user ID is stored in req.user after login
+  const hgoUser = req.user;
 
-  // Check if the logged-in user is an HGO
-  if (req.user.user_type !== 'HGO') {
-    return res.status(403).json({ status: 'error', message: "Only HGO users can submit requests." });
-  }
 
+  // Check for required form data fields
   if (!date || !narration || !currency || !amount) {
-    console.error("Validation error: Missing required fields."); // Log validation errors
-    return res.status(400).json({ status: 'error', message: "All fields are required." });
+    return res.status(400).json({ message: 'All fields are required.' });
   }
-  
-  if (narration.length > 250) {
-    console.error("Validation error: Narration exceeds 250 characters."); // Log validation errors
-    return res.status(400).json({ status: 'error', message: "Narration exceeds 250 characters." });
-  }
-  
-  if (isNaN(amount)) {
-    console.error("Validation error: Amount is not a number."); // Log validation errors
-    return res.status(400).json({ status: 'error', message: "Amount must be a number." });
-  }
-
-  // Fetch the monazam_id for the current HGO
-  const fetchMonazamSql = "SELECT monazam_id FROM users WHERE id = ?";
-  let hgoUser;
-
+console.log("hgouser", req.user);
   try {
-    const [[result]] = await mysqlPool.query(fetchMonazamSql, [hgoId]);
-    hgoUser = result; 
-    console.log('Fetched HGO user:', hgoUser); // Log fetched user
+    // Get monazam_id for the HGO user
+    const [result] = await mysqlPool.query(
+      'SELECT monazam_id FROM users WHERE id = ? AND user_type = "HGO"',
+      [hgoUser.id]
+      
+    );
+    console.log("hgouser", req.user);
+    const monazam_id = result[0]?.monazam_id;
+
+    if (!monazam_id) {
+      return res.status(400).json({ message: 'HGO does not have a valid Monazam parent.' });
+    }
+
+    // Insert the incoming request with additional fields
+    const status = 'pending'; // Set default status
+    await mysqlPool.query(
+      'INSERT INTO incoming_requests (date, narration, amount, currency, hgo_id, monazam_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [date, narration, amount, currency, hgoUser.id, monazam_id, status]
+    );
+
+    res.status(200).json({ message: 'Incoming request submitted successfully.' });
   } catch (error) {
-    console.error("Error fetching Monazam ID:", error.message);
-    return res.status(500).json({ message: "Internal server error while fetching Monazam ID." });
+    console.error('Error saving request:', error);
+    res.status(500).json({ message: 'Failed to save request.' });
   }
-
-  if (!hgoUser || !hgoUser.monazam_id) {
-    return res.status(400).json({ message: "No parent Monazam found for this HGO." });
-  }
-
-  // Insert the new incoming request
-  const insertSql = `
-  INSERT INTO incoming_request (hgo_id, monazam_id, date, narration, currency, amount, status)
-  VALUES (?, ?, ?, ?, ?, ?, 'pending')
-`;
-
-// Log the SQL statement and the values being inserted
-console.log('Insert SQL:', insertSql); // Log SQL
-console.log('Values:', [hgoId, hgoUser.monazam_id, date, narration, currency, amount]); // Log values
-
-try {
-  const [results] = await mysqlPool.query(insertSql, [
-    hgoId,
-    hgoUser.monazam_id,
-    date,
-    narration,
-    currency,
-    amount,
-  ]);
-  res.status(200).json({ status: 'success', message: "Request submitted successfully!", results });
-} catch (error) {
-  console.error("Error saving data:", error.message); // Log the error
-  return res.status(500).json({ status: 'error', message: "Error saving data", error: error.message });
-}
 });
-
 app.post("/api/reviewrequest/:requestId", async (req, res) => {
   const { requestId } = req.params;
   const { action } = req.body; // 'approve' or 'reject'
@@ -789,27 +752,6 @@ app.get("/api/hgo/requests", async (req, res) => {
     res.status(500).json({ message: "Error fetching requests", error: error.message });
   }
 });
-app.get("/api/monazam/requests", async (req, res) => {
-  const monazamId = req.user.id; // Monazam user ID
-
-  if (req.user.user_type !== 'Monazam') {
-    return res.status(403).json({ message: "Only Monazam users can view requests." });
-  }
-
-  try {
-    const sql = `
-      SELECT ir.*, hgo.name as hgo_name
-      FROM incoming_request ir
-      JOIN users hgo ON ir.hgo_id = hgo.id
-      WHERE ir.monazam_id = ? AND ir.status = 'pending'
-    `;
-    const [requests] = await mysqlPool.query(sql, [monazamId]);
-    res.status(200).json(requests);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching requests", error: error.message });
-  }
-});
-
 
 // GET API to fetch data from the database
 app.get("/api/incomingrequest", async (req, res) => {

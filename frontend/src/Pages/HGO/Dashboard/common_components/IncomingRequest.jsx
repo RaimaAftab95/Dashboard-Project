@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const IncomingRequest = ({ isOpen, onClose }) => {
@@ -8,10 +8,9 @@ const IncomingRequest = ({ isOpen, onClose }) => {
     currency: '',
     amount: ''
   };
-  
+
   const [formData, setFormData] = useState(initialFormData); // Initialize form data state
-  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
-  const [message, setMessage] = useState(''); // Message for success or failure feedback
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,42 +22,43 @@ const IncomingRequest = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setMessage(''); // Clear previous messages
+ if (loading) return; // Prevent multiple submissions
+    setLoading(true);
 
     const { date, narration, currency, amount } = formData;
 
+ 
     if (!date || !narration || !currency || !amount) {
       alert('All fields are required.');
-      setIsSubmitting(false);
+      setLoading(false);
       return;
     }
-
+  console.log(formData);
     try {
       const response = await fetch('http://localhost:3000/api/incomingrequest', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json', 
         },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
-        setMessage('Request Generated Successfully');
+        alert('Request Generated');
         setFormData(initialFormData); // Reset form data after successful submission
-        onClose();
+        onClose(); 
       } else {
-        setMessage(data.message || 'Failed to save data');
+        alert(data.message || 'Failed to save data');
       }
     } catch (error) {
       console.error('Error submitting data:', error);
-      setMessage('Failed to submit data');
+      alert('Failed to submit data');
     } finally {
-      setIsSubmitting(false);
+      setLoading(false); // Reset loading state
     }
   };
-
   if (!isOpen) return null;
 
   return (
@@ -77,8 +77,6 @@ const IncomingRequest = ({ isOpen, onClose }) => {
           </div>
 
           <div className="modal-body">
-            {message && <div className="alert alert-info">{message}</div>}
-            
             <div className="row mb-3">
               <div className="col-12 col-md-6">
                 <label className="modal-label-txt">Date</label>
@@ -130,13 +128,9 @@ const IncomingRequest = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          <div className="modal-footer justify-content-center">
-            <button
-              className="btn w-50 modal-label-txt modal-btn-bg"
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit'}
+           <div className="modal-footer justify-content-center">
+            <button className="btn w-50 modal-label-txt modal-btn-bg" onClick={handleSubmit} disabled={loading}>
+              {loading ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </div>
